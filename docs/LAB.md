@@ -43,8 +43,8 @@ Defined in `PRESETS`; one-line titles in `PRESET_META` (used as the `<option tit
 | `dmg` | Damage colour | `tint`, `patterned`, `mono`, `legend`, `swatch` |
 | `findings` | Findings list | `timeline`, `accordion`, `split`, `bands`, `rail`, `oneliners`, `columns`, `index`, `cards` |
 | `recs` | Recommendations | `stepcards`, `stepper`, `beforeafter`, `grid` (3-up bordered tiles, big number), `lanes` (full-width rows, left lane header), `sticky`, `receipt` |
-| `gear` | Gear layout | `ladder` (worst gap first, gap meter, band stripe), `slots` (paperdoll grid), `compact` (aligned one-row-per-slot) |
-| `gdelta` | Skill gear changes | `delta` (tier-range pips), `tags` (slot tag, hover/focus/click lights the gear card), `compact` (one-liners) |
+| `gear` | Gear layout | `ladder` (worst gap first, gap meter, band stripe), `slots` (paperdoll grid), `compact` (aligned one-row-per-slot), `bars` (one full-width gap bar per slot, worst first, band word + gap number), `tiers` (Far / Mid / Near groups, heading on the first card of each band) |
+| `gdelta` | Skill gear changes | `delta` (tier-range pips), `tags` (slot tag, hover/focus/click lights the gear card), `compact` (one-liners), `grouped` (rows ordered by slot, one slot heading per slot, CSS only) |
 | `nav` | Section navigation | `tabs`, `rail`, `chips`, `jump`, `progress`, `none` |
 | `disclose` | Disclosure | `tabs`, `open`, `accordion`, `pro`, `hover` |
 | `hero` | Page hero | `compact`, `plate`, `banner`, `split`, `crumb`, `minimal`, `ledgerhead` |
@@ -73,4 +73,6 @@ Attributes only, no content edits (added to `site/character/index.html`; `?lab=0
 - Gear visuals never use pseudo-elements on `.card` (the `card` and `frame` groups own them); they draw on `p.label-metric::after` and the flag list's `::before`.
 - `ladder` reorders visually with `order` only; DOM and reading order are unchanged.
 - `gdelta=tags` is the one gear option with JS (`gtagsOn/gtagsOff` in `lab.js`): rows get `tabindex=0`, and hover/focus/click sets `data-lab-hot` on the matching gear card (click scrolls to it, instant). Turning the option off removes all of it.
+- `bars`/`tiers` are single-column flex lists (BAD pairs with `grid:2col|3col`; `bars` also with `card:stack`). `bars` hides the flag list items and draws the bar on `ul::before`, the gap number via `counter-reset:g var(--gap)` on `ul::after`. `tiers` headings are on `p.label-metric::before` of the first card per band (no `.card` pseudo), so they sit inside that card, not above the group.
+- `gdelta=grouped` is CSS only: `order` by slot, heading from `data-slot` on the first row of each slot.
 - `solo()` now opens ancestor `<details>` so gallery tiles whose target is inside a closed disclosure are not blank.

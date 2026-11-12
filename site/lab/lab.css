@@ -631,3 +631,49 @@ body[data-gdelta="compact"] [data-lab=gdelta]>li>div:first-child>span.flex-1{ove
 body[data-gdelta="compact"] [data-lab=gdelta]>li>div:first-child>.chip{flex:none}
 body[data-gdelta="compact"] [data-lab=gdelta]>li>div:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 @media(max-width:480px){body[data-gdelta="compact"] [data-lab=gdelta]>li>div:first-child>.chip{display:none}}
+
+/* ---------- gear: bars / tiers, gdelta: grouped ----------
+   No .card pseudo-elements. bars draws on ul::before/::after; tiers headings sit on p.label-metric::before of the first card per band. */
+body[data-gear="bars"] #gear [data-gear-targets]{display:flex;flex-direction:column;gap:var(--card-gap,8px)}
+body[data-gear="bars"] #gear [data-gear-targets]>li{--lab-band:var(--lab-sev-unknown);order:calc(100 - var(--gap,0));margin:0;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 12px;align-items:baseline;border-left:4px solid var(--lab-band);counter-reset:g var(--gap,0)}
+body[data-gear="bars"] #gear [data-gear-targets]>li[data-band="far"],body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="far"]{--lab-band:var(--lab-sev-fail)}
+body[data-gear="bars"] #gear [data-gear-targets]>li[data-band="mid"],body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="mid"]{--lab-band:var(--lab-sev-warn)}
+body[data-gear="bars"] #gear [data-gear-targets]>li[data-band="near"],body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="near"]{--lab-band:var(--lab-sev-pass)}
+body[data-gear="bars"] #gear [data-gear-targets]>li>div{display:contents}
+body[data-gear="bars"] #gear [data-gear-targets]>li p.label-metric{grid-column:1;grid-row:1}
+body[data-gear="bars"] #gear [data-gear-targets]>li p.truncate{grid-column:2;grid-row:1;min-width:0}
+body[data-gear="bars"] #gear [data-gear-targets]>li>a{grid-column:3;grid-row:1;padding:2px 8px;font-size:11px;min-height:0;opacity:.85}
+body[data-gear="bars"] #gear [data-gear-targets]>li ul{grid-column:1/-1;grid-row:2;display:flex;align-items:center;gap:10px;margin:0}
+body[data-gear="bars"] #gear [data-gear-targets]>li ul li{display:none}
+body[data-gear="bars"] #gear [data-gear-targets]>li ul::before{content:"";flex:1;height:10px;background:linear-gradient(90deg,var(--lab-band) 0 calc(min(var(--gap,0),10) * 10%),var(--line-strong,#3a3846) 0)}
+body[data-gear="bars"] #gear [data-gear-targets]>li ul::after{content:counter(g);min-width:7ch;text-align:right;font:600 12px/1 var(--font-mono,var(--lab-mono));font-variant-numeric:tabular-nums;color:var(--lab-band)}
+body[data-gear="bars"] #gear [data-gear-targets]>li[data-band="far"] ul::after{content:counter(g) " FAR"}
+body[data-gear="bars"] #gear [data-gear-targets]>li[data-band="mid"] ul::after{content:counter(g) " MID"}
+body[data-gear="bars"] #gear [data-gear-targets]>li[data-band="near"] ul::after{content:counter(g) " NEAR"}
+@media(max-width:480px){
+ body[data-gear="bars"] #gear [data-gear-targets]>li{grid-template-columns:minmax(0,1fr) auto}
+ body[data-gear="bars"] #gear [data-gear-targets]>li p.truncate{grid-column:1/-1;grid-row:2}
+ body[data-gear="bars"] #gear [data-gear-targets]>li ul{grid-row:3}
+}
+body[data-gear="tiers"] #gear [data-gear-targets]{display:flex;flex-direction:column;gap:var(--card-gap,8px)}
+body[data-gear="tiers"] #gear [data-gear-targets]>li{--lab-band:var(--lab-sev-unknown);margin:0;border-left:4px solid var(--lab-band)}
+body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="far"]{order:1}
+body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="mid"]{order:2}
+body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="near"]{order:3}
+body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="mid"]:not([data-band="mid"]~li),body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="near"]:not([data-band="near"]~li){margin-top:14px}
+body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="far"]:not([data-band="far"]~li) p.label-metric::before{content:"FAR · 7+ tiers below the top";display:block;margin:0 0 8px;padding-bottom:4px;border-bottom:1px solid var(--lab-band);font:600 10px/1.4 var(--font-mono,var(--lab-mono));letter-spacing:.12em;color:var(--lab-band)}
+body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="mid"]:not([data-band="mid"]~li) p.label-metric::before{content:"MID · 4-6 tiers below the top";display:block;margin:0 0 8px;padding-bottom:4px;border-bottom:1px solid var(--lab-band);font:600 10px/1.4 var(--font-mono,var(--lab-mono));letter-spacing:.12em;color:var(--lab-band)}
+body[data-gear="tiers"] #gear [data-gear-targets]>li[data-band="near"]:not([data-band="near"]~li) p.label-metric::before{content:"NEAR · 0-3 tiers below the top";display:block;margin:0 0 8px;padding-bottom:4px;border-bottom:1px solid var(--lab-band);font:600 10px/1.4 var(--font-mono,var(--lab-mono));letter-spacing:.12em;color:var(--lab-band)}
+body[data-gdelta="grouped"] [data-lab=gdelta]{display:flex;flex-direction:column;gap:4px}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li{margin:0;border-left:2px solid var(--accent-line)}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="helmet"]{order:1}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="amulet"]{order:2}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="body"]{order:3}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="main-hand"]{order:4}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="off-hand"]{order:5}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="gloves"]{order:6}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="ring-1"]{order:7}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="ring-2"]{order:8}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="belt"]{order:9}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="boots"]{order:10}
+body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="helmet"]:not([data-slot="helmet"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="amulet"]:not([data-slot="amulet"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="body"]:not([data-slot="body"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="main-hand"]:not([data-slot="main-hand"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="off-hand"]:not([data-slot="off-hand"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="gloves"]:not([data-slot="gloves"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="ring-1"]:not([data-slot="ring-1"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="ring-2"]:not([data-slot="ring-2"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="belt"]:not([data-slot="belt"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="boots"]:not([data-slot="boots"]~li)::before{content:attr(data-slot);display:block;margin-bottom:4px;font:600 10px/1.4 var(--font-mono,var(--lab-mono));letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
