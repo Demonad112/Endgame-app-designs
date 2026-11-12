@@ -5,6 +5,7 @@
   var Q = new URLSearchParams(location.search), MODE = Q.get('lab');
   if (MODE === '0') return;
   var SOLO = MODE === 'solo', AUDIT = MODE === 'audit';
+  document.documentElement.setAttribute('data-lab-on', '');
   var KEY = 'lab:v1', PKEY = 'lab:presets';
 
   function G(key, label, theme, solo, spec) {
@@ -17,20 +18,20 @@
     G('card', 'Card elevation', S1, '[data-top-fixes]', 'flat|Flat|No shadow, hairline only;raised|Raised|Soft lifted shadow;stepped|Stepped|Hard offset shadow;stack|Stack|Two ghost cards behind;pressed|Pressed|Inset, pushed-in panel;underglow|Underglow|Ambient gold glow beneath;toplit|Top-lit|Highlight on top edge, shade below;engraved|Engraved|Double engraved inner border;bare|Bare|Content on the page, no panel;cutout|Cutout|Gold hairline set inside the edge;shelf|Shelf|Thick bottom ledge'),
     G('fill', 'Panel fill', S1, '[data-top-fixes]', 'clear|Clear glass|Very light tint;frost|Frosted|Blurred frosted tint;ink|Solid ink|Opaque near-black;vgrad|Vertical gradient|Light to dark top-down;sheen|Diagonal sheen|Soft diagonal highlight;grain|Noise grain|Fine film grain;parchment|Dark parchment|Warm paper texture;duotone|Gold wash|Duotone gold wash;scanline|Scanline|1px horizontal lines;smoke|Smoke|Off-centre radial haze'),
     G('frame', 'Borders & frames', S1, '[data-top-fixes]', 'double|Double rule|Second rule outside;brackets|Brackets|Gold corner brackets;notch|Notched|Cut corners, straight edges;barL|Left bar|Left accent bar;barT|Top bar|Top accent bar;dashed|Dashed|Technical dashed edge;spaced|Spaced|No border, spacing only;rivets|Rivets|Square corner studs;tickframe|Ruler ticks|Ruler ticks on the top edge'),
-    G('head', 'Card header', S1, '[data-top-fixes]', 'tab|Tab|Label sits in a tab on the border;rule|Rule|Rule extends right of label;numbered|Numbered|Section counter prefix;strip|Strip|Filled small-caps bar;side|Side|Rotated side label (wide screens);minimal|Minimal|Small quiet label;count|Count badge|Item count badge;hanging|Hanging|Label hung in the left gutter (very wide screens)'),
+    G('head', 'Card header', S1, '[data-top-fixes]', 'tab|Tab|Label sits in a tab on the border;rule|Rule|Rule extends right of label;overline|Overline|Gold rule above the label;strip|Strip|Filled small-caps bar;side|Side|Rotated side label (strip on narrow screens);minimal|Minimal|Small quiet label;marker|Marker|Square gold marker before the label;hanging|Hanging|Label hung in the left gutter (hairline label on narrower screens)'),
     G('divider', 'Section dividers', S1, '#findings', 'rule|Rule|Thin rule;diamond|Diamond|Gold diamond mid-rule;ornament|Ornament|Three-diamond ornament in a gap;ticks|Ticks|Ruler tick marks;fade|Fade|Gradient fade line;chapter|Chapter|Large outlined section number;ledger|Ledger|Double hairline'),
     G('density', 'Density', S1, '#findings', 'compact|Compact|Tight padding;snug|Snug|Slightly tight;comfy|Comfortable|Roomy padding;spacious|Spacious|Generous padding and gaps;luxe|Luxe|Maximum breathing room'),
     G('grid', 'Layout grid', S1, '#findings', '1col|Single column|One column everywhere;2col|Two column|Cards in two columns;3col|Three column|Three columns on wide screens;masonry|Masonry|Flowing columns;bento|Bento|First tile spans 2x2;rail|Rail|Narrow centred measure;gutter|Title gutter|Section title in a left gutter'),
-    G('grade', 'Grade display', S2, '[data-showcase]', 'letter|Letter|Large bare letter;framed|Framed|Square frame, level;segbar|Segment bar|Ladder as contiguous bar;ticks|Tick gauge|Ladder as ruler gauge;band|Range band|Lit range shaded;ladder|Stair ladder|Rising rungs;badge|Badge|Compact badge;monogram|Monogram|Plate with heavy bars;margin|Margin|Grade in the margin;seal|Seal|Double inset square seal;stencil|Stencil|Outlined letters'),
+    G('grade', 'Grade display', S2, '[data-showcase]', 'letter|Letter|Large bare letter;slab|Slab|Solid gold block, dark letter;segbar|Segment bar|Ladder as contiguous bar;ticks|Tick gauge|Ladder as ruler gauge;band|Range band|Lit range shaded;ladder|Stair ladder|Rising rungs;badge|Badge|Compact badge;underbar|Underbar|Bare letter on a heavy gold bar;margin|Margin|Grade in the margin;seal|Seal|Double inset square seal;stencil|Stencil|Outlined letters'),
     G('rows', 'Stat rows', S2, '#defences .card:has(.pools)', 'table|Table|One row per stat;leaders|Leaders|Dotted leaders;centered|Centred|Centred stacks;valuefirst|Value first|Big value above label;chips|Chips|Inline chips;plinth|Plinth|Heavy underline per tile;zebra|Zebra|Alternating rows;pairs|Pairs|Two-up pairs;ruled|Ruled|Hairlines, values right;tabbed|Tabbed|Label strip on top'),
-    G('nums', 'Numerals', S2, '#defences .card:has(.pools)', 'oldstyle|Old-style|Garamond old-style figures;lining|Lining|Garamond lining figures;sans|Sans|Inter tabular figures;keygold|Key gold|Gold on key values;quiet|Quiet|Dimmed secondary values;bigvalue|Big value|Larger key numerals;condensed|Condensed|Tight tracking;slashedzero|Slashed zero|Zero with slash'),
+    G('nums', 'Numerals', S2, '#defences .card:has(.pools)', 'oldstyle|Old-style|Garamond old-style figures;lining|Lining|Garamond lining figures;sans|Sans|Inter tabular figures;keygold|Key gold|Gold on key values;mono|Mono|Geist Mono tabular figures;bigvalue|Big value|Larger key numerals;condensed|Condensed|Tight tracking;boxed|Boxed|Key values in gold-tinted cells'),
     G('meter', 'Resist meters', S2, '#defences .card:has([data-io])', 'plain|Plain numbers|No bar;segments|Segments|Segmented fill;underline|Underline|Thin underlined meter;capmark|Cap mark|Bold cap marker;heat|Heat strip|Gradient scale with pointer;spark|Column spark|Rising columns;dial|Square dial|Square tick ring from the cap ratio;delta|Delta chip|Delta boxed, bar removed;ruler|Ruler|Measuring-ruler track;notched|Notched|Ten notched cells'),
-    G('sev', 'Severity & status', S2, '#defence-checklist-disclosure', 'square|Square dot|Square marker;badge|Badge|Filled badge;stripe|Stripe|Left stripe;tag|Tag|Outlined text tag;glyph|Glyph|Shape glyph per status;rowtint|Row tint|Tinted row;outline|Outline|Outlined chips;filled|Filled|Solid chips;traffic|Traffic strip|Three-segment strip;margin|Margin mark|Glyph hung in the gutter'),
+    G('sev', 'Severity & status', S2, '#defence-checklist-disclosure', 'square|Square dot|Square marker;badge|Badge|Filled badge;stripe|Stripe|Left stripe;tag|Tag|Outlined text tag;glyph|Glyph|Shape glyph per status;rowtint|Row tint|Tinted row;underscore|Underscore|Underlined status text;filled|Filled|Solid chips;traffic|Traffic strip|Three-segment strip;margin|Margin mark|Glyph hung in the gutter'),
     G('dmg', 'Damage colour', S2, '#defences .card:has([data-io])', 'tint|Text tint|Label tinted by element;patterned|Patterned|Hatch per element (colour-blind safe);mono|Mono gold|One gold for all;legend|Legend chips|Labels as colour-keyed chips;swatch|Swatch|Square swatch beside label'),
-    G('findings', 'Findings list', S3, '#findings ul', 'timeline|Timeline|Thread connectors;accordion|Accordion|Compact rows, detail on hover;split|Split|Problem and fix side by side;checklist|Checklist|Square boxes;rail|Rail|Severity-ordered rail;oneliners|One-liners|Single-line rows;columns|Columns|Columns by severity;index|Index|Numbered index first;cards|Cards|Single-column cards'),
-    G('recs', 'Recommendations', S3, '[data-top-fixes]', 'stepcards|Step cards|Heavy numbered steps;stepper|Stepper|Vertical stepper line;beforeafter|Before / after|Two-pane pairs;grid|Grid|Severity by section grid;lanes|Lanes|Lanes by status;sticky|Next action|Sticky next-action strip;receipt|Receipt|Narrow ledger slip'),
-    G('nav', 'Section navigation', S3, '#findings', 'tabs|Sticky tabs|Strong sticky tab bar;rail|Left rail|Left rail with scroll-spy;chips|Chips|Anchor chips;jump|Jump menu|Select menu;progress|Progress rule|Scroll progress line;none|None|Hide navigation'),
-    G('disclose', 'Disclosure', S3, '#findings', 'open|All open|Open everything;accordion|Accordion|One open at a time;pro|Pro detail|Detail text on hover or focus;hover|Hover reveal|Reveal on hover / tap'),
+    G('findings', 'Findings list', S3, '#findings ul', 'timeline|Timeline|Thread connectors;accordion|Accordion|Compact rows, detail on hover;split|Split|Problem and fix side by side;bands|Bands|Full-width alternating bands, no cards;rail|Rail|Severity-ordered rail;oneliners|One-liners|Single-line rows;columns|Columns|Columns by severity;index|Index|Numbered index first;cards|Cards|Single-column cards'),
+    G('recs', 'Recommendations', S3, '[data-top-fixes]', 'stepcards|Step cards|Heavy numbered steps;stepper|Stepper|Vertical stepper line;beforeafter|Before / after|Two-pane pairs;grid|Grid|Three-up bordered tiles, big number;lanes|Lanes|Full-width rows, lane header on the left;sticky|Next action|Sticky next-action strip;receipt|Receipt|Narrow ledger slip'),
+    G('nav', 'Section navigation', S3, '#findings', 'tabs|Sticky tabs|Strong sticky tab bar;rail|Left rail|Left rail with scroll-spy (scroll rail on narrow screens);chips|Chips|Anchor chips;jump|Jump menu|Select menu;progress|Progress rule|Scroll progress line;none|None|Hide navigation'),
+    G('disclose', 'Disclosure', S3, '#findings', 'tabs|Tabs|Card disclosures become a tab set;open|All open|Open everything;accordion|Accordion|One open at a time;pro|Pro detail|Detail text on hover or focus;hover|Hover reveal|Reveal on hover / tap'),
     G('hero', 'Page hero', S3, '[data-showcase]', 'compact|Compact line|Tight title;plate|Plate|Class plate;banner|Banner|Wide banner;split|Split|Meta to the right;crumb|Crumb|Breadcrumb style;minimal|Minimal|Bare;ledgerhead|Ledger head|Rule and meta columns'),
     G('htype', 'Headings', S4, '#overview-title', 'tracked|Tracked|Wide tracking;underline|Gold underline|Large with underline;numbered|Numbered|Number prefix;outlined|Outlined|Outline letters;split|Split weight|Light and bold;centred|Centred rules|Rules either side;smallcaps|Small caps|Plain small caps;foil|Foil|Static foil gradient'),
     G('scale', 'Type scale', S4, '#findings', 'tight|Tight|Compact type;airy|Airy|Looser leading;fluid|Fluid|Viewport scaled;editorial|Editorial|Wide measure, large leading;standard|Standard|Slightly larger body'),
@@ -47,19 +48,34 @@
 
   var PRESETS = {
     'Archive': { card: 'engraved', fill: 'parchment', frame: 'double', head: 'rule', divider: 'ornament', grade: 'seal', rows: 'leaders', nums: 'oldstyle', meter: 'underline', sev: 'glyph', accent: 'antique', bg: 'vignette', htype: 'smallcaps', chip: 'bracketed' },
-    'Ledger': { card: 'flat', fill: 'ink', frame: 'tickframe', head: 'numbered', divider: 'ledger', grade: 'margin', rows: 'ruled', nums: 'slashedzero', meter: 'ruler', sev: 'margin', findings: 'checklist', htype: 'tracked', chip: 'monocaps', bg: 'grid' },
-    'Plate': { card: 'raised', fill: 'vgrad', frame: 'rivets', head: 'strip', divider: 'diamond', grade: 'monogram', rows: 'tabbed', nums: 'keygold', meter: 'segments', sev: 'badge', hero: 'plate', accent: 'brass', htype: 'underline' },
-    'Quiet': { card: 'bare', fill: 'clear', frame: 'spaced', head: 'minimal', divider: 'fade', density: 'spacious', grade: 'letter', rows: 'centered', nums: 'quiet', meter: 'plain', sev: 'square', htype: 'smallcaps', scale: 'airy', grid: 'rail', accent: 'champagne', footer: 'minimal', chip: 'underlined' },
-    'Dense Ops': { card: 'flat', fill: 'ink', frame: 'barL', head: 'count', divider: 'rule', density: 'compact', grid: '3col', grade: 'ticks', rows: 'table', nums: 'condensed', meter: 'notched', sev: 'tag', findings: 'oneliners', scale: 'tight', accent: 'amber', chip: 'monocaps', nav: 'tabs' },
+    'Ledger': { card: 'flat', fill: 'ink', frame: 'tickframe', head: 'overline', divider: 'ledger', grade: 'margin', rows: 'ruled', nums: 'boxed', meter: 'ruler', sev: 'margin', findings: 'bands', htype: 'tracked', chip: 'monocaps', bg: 'grid' },
+    'Plate': { card: 'raised', fill: 'vgrad', frame: 'rivets', head: 'strip', divider: 'diamond', grade: 'slab', rows: 'tabbed', nums: 'keygold', meter: 'segments', sev: 'badge', hero: 'plate', accent: 'brass', htype: 'underline' },
+    'Quiet': { card: 'bare', fill: 'clear', frame: 'spaced', head: 'minimal', divider: 'fade', density: 'spacious', grade: 'letter', rows: 'centered', nums: 'mono', meter: 'plain', sev: 'square', htype: 'smallcaps', scale: 'airy', grid: 'rail', accent: 'champagne', footer: 'minimal', chip: 'underlined' },
+    'Dense Ops': { card: 'flat', fill: 'ink', frame: 'barL', head: 'marker', divider: 'rule', density: 'compact', grid: '3col', grade: 'ticks', rows: 'table', nums: 'condensed', meter: 'notched', sev: 'tag', findings: 'oneliners', scale: 'tight', accent: 'amber', chip: 'monocaps', nav: 'tabs' },
     'Editorial': { card: 'bare', fill: 'clear', frame: 'spaced', head: 'hanging', divider: 'chapter', density: 'luxe', grid: 'gutter', grade: 'letter', rows: 'valuefirst', nums: 'oldstyle', meter: 'underline', htype: 'split', scale: 'editorial', hero: 'ledgerhead', accent: 'champagne', findings: 'timeline', chip: 'underlined' },
-    'Relic': { card: 'toplit', fill: 'smoke', frame: 'notch', head: 'tab', divider: 'ornament', grade: 'framed', rows: 'plinth', nums: 'keygold', meter: 'capmark', sev: 'stripe', bg: 'corners', accent: 'bronze', htype: 'foil', motion: 'drawin' },
-    'Blueprint': { card: 'cutout', fill: 'scanline', frame: 'dashed', head: 'numbered', divider: 'ticks', grade: 'band', rows: 'pairs', nums: 'sans', meter: 'ruler', sev: 'outline', bg: 'grid', htype: 'tracked', chip: 'bracketed', nav: 'chips' },
+    'Relic': { card: 'toplit', fill: 'smoke', frame: 'notch', head: 'tab', divider: 'ornament', grade: 'underbar', rows: 'plinth', nums: 'keygold', meter: 'capmark', sev: 'stripe', bg: 'corners', accent: 'bronze', htype: 'foil', motion: 'drawin' },
+    'Blueprint': { card: 'cutout', fill: 'scanline', frame: 'dashed', head: 'overline', divider: 'ticks', grade: 'band', rows: 'pairs', nums: 'sans', meter: 'ruler', sev: 'underscore', bg: 'grid', htype: 'tracked', chip: 'bracketed', nav: 'chips' },
     'Field Report': { card: 'shelf', fill: 'grain', frame: 'barT', head: 'rule', divider: 'ledger', grade: 'badge', rows: 'zebra', nums: 'lining', meter: 'heat', sev: 'rowtint', recs: 'stepper', findings: 'split', accent: 'brass', bg: 'hatch' },
     'Vault': { card: 'underglow', fill: 'duotone', frame: 'brackets', head: 'strip', divider: 'diamond', grade: 'stencil', rows: 'chips', nums: 'keygold', meter: 'spark', sev: 'filled', dmg: 'patterned', bg: 'fog', accent: 'rose', htype: 'outlined', motion: 'lift', states: 'glow' },
     'Telegraph': { card: 'stepped', fill: 'ink', frame: 'double', head: 'side', divider: 'rule', grade: 'segbar', rows: 'leaders', nums: 'condensed', meter: 'delta', sev: 'traffic', recs: 'receipt', hero: 'banner', htype: 'tracked', chip: 'monocaps', footer: 'plate' },
-    'Codex': { card: 'stack', fill: 'parchment', frame: 'barL', head: 'numbered', divider: 'chapter', grade: 'ladder', rows: 'ruled', nums: 'oldstyle', meter: 'segments', sev: 'glyph', findings: 'index', hero: 'crumb', htype: 'numbered', accent: 'antique', bg: 'vignette', scale: 'editorial' }
+    'Codex': { card: 'stack', fill: 'parchment', frame: 'barL', head: 'marker', divider: 'chapter', grade: 'ladder', rows: 'ruled', nums: 'oldstyle', meter: 'segments', sev: 'glyph', findings: 'index', hero: 'crumb', htype: 'numbered', accent: 'antique', bg: 'vignette', scale: 'editorial' }
+  };
+  var PRESET_META = {
+    'Archive': 'Dark parchment, engraved double frames, old-style figures, antique gold.',
+    'Ledger': 'Flat ink ledger: tick frames, overline heads, boxed numerals, bands.',
+    'Plate': 'Raised riveted plates with strip headers and slab grades.',
+    'Quiet': 'Bare, airy and muted: minimal heads, mono figures, narrow measure.',
+    'Dense Ops': 'Compact operations view: three columns, notched meters, one-liners.',
+    'Editorial': 'Magazine layout: hanging labels, luxe spacing, large leading.',
+    'Relic': 'Top-lit notched cards, foil headings, bronze accent.',
+    'Blueprint': 'Dashed cutouts on a faint grid, scanlines, bracketed chips.',
+    'Field Report': 'Shelf cards, grain fill, zebra rows, stepper recommendations.',
+    'Vault': 'Underglow cards, gold wash, brackets, patterned damage colours.',
+    'Telegraph': 'Hard stepped shadows, side labels, receipt recommendations.',
+    'Codex': 'Stacked parchment cards, chapter numerals, indexed findings.'
   };
   Object.keys(PRESETS).forEach(function (n) { Object.freeze(PRESETS[n]); }); Object.freeze(PRESETS);
+  window.__labPresets = PRESETS; window.__labPresetMeta = PRESET_META;
   var BAD = [['card:bare', 'frame:spaced'], ['card:bare', 'frame:brackets'], ['card:bare', 'frame:rivets'], ['frame:notch', 'card:stepped'], ['frame:notch', 'card:underglow'], ['head:side', 'head:side'], ['grid:rail', 'grid:masonry'], ['nav:rail', 'grid:gutter'], ['grid:bento', 'findings:columns'], ['meter:dial', 'dmg:patterned']];
 
   /* ---------- state ---------- */
@@ -84,9 +100,53 @@
   function setAll(o) { state = {}; Object.keys(o).forEach(function (k) { if (valid(k, o[k]) && o[k] !== 'base') state[k] = o[k]; }); apply(); persist(); sync(); }
 
   /* ---------- JS behaviours ---------- */
-  var spy, jump, nextBar;
+  var spy, jump, nextBar, tabSets = [];
+  function tabsOff() {
+    tabSets.forEach(function (t) {
+      t.list.remove();
+      t.panels.forEach(function (p) {
+        p.el.removeAttribute('data-lab-off'); p.el.removeAttribute('role'); p.el.removeAttribute('aria-labelledby'); if (p.el.hasAttribute('data-lab-id')) { p.el.removeAttribute('id'); p.el.removeAttribute('data-lab-id'); }
+        p.el.open = p.open;
+      });
+    });
+    tabSets = [];
+  }
+  function tabsOn() {
+    if (tabSets.length) return;
+    var seen = [];
+    document.querySelectorAll('main details.card').forEach(function (d) {
+      if (seen.indexOf(d) > -1) return;
+      var grp = [d], n = d.nextElementSibling;
+      while (n && n.matches('details.card')) { grp.push(n); n = n.nextElementSibling; }
+      grp.forEach(function (x) { seen.push(x); });
+      if (grp.length < 2) return;
+      var list = h('div', { role: 'tablist', 'aria-label': 'Sections', class: 'lab-tabs', 'data-lab-ui': '' }), set = { list: list, panels: [], tabs: [] };
+      grp.forEach(function (el, i) {
+        var sum = el.querySelector('summary'), id = 'lab-tab-' + tabSets.length + '-' + i;
+        var tab = h('button', { type: 'button', role: 'tab', id: id, 'aria-selected': 'false', tabindex: '-1', text: (sum ? sum.textContent : 'Section ' + (i + 1)).trim() });
+        el.setAttribute('role', 'tabpanel'); el.setAttribute('aria-labelledby', id);
+        tab.setAttribute('aria-controls', el.id || (id + '-p'));
+        if (!el.id) el.id = id + '-p', el.setAttribute('data-lab-id', '');
+        set.panels.push({ el: el, open: el.open }); set.tabs.push(tab); list.appendChild(tab);
+        tab.onclick = function () { pick(i, false); };
+        tab.onkeydown = function (e) {
+          var k = e.key, j = k === 'ArrowRight' || k === 'ArrowDown' ? (i + 1) % grp.length : k === 'ArrowLeft' || k === 'ArrowUp' ? (i + grp.length - 1) % grp.length : k === 'Home' ? 0 : k === 'End' ? grp.length - 1 : -1;
+          if (j < 0) return; e.preventDefault(); pick(j, true);
+        };
+      });
+      function pick(i, focus) {
+        set.tabs.forEach(function (t, j) {
+          var on = i === j; t.setAttribute('aria-selected', on ? 'true' : 'false'); t.tabIndex = on ? 0 : -1;
+          if (on) { set.panels[j].el.removeAttribute('data-lab-off'); set.panels[j].el.open = true; } else set.panels[j].el.setAttribute('data-lab-off', '');
+        });
+        if (focus) set.tabs[i].focus();
+      }
+      grp[0].parentNode.insertBefore(list, grp[0]); tabSets.push(set); pick(0, false);
+    });
+  }
   function behaviours() {
     var d = state.disclose;
+    if (d !== 'tabs') tabsOff(); else tabsOn();
     if (d === 'open') document.querySelectorAll('main details').forEach(function (e) { e.open = true; });
     if (state.nav === 'rail' && !spy && 'IntersectionObserver' in window) {
       spy = new IntersectionObserver(function (es) {
@@ -151,11 +211,17 @@
     Object.keys(attrs || {}).forEach(function (k) { if (k === 'text') e.textContent = attrs[k]; else if (k.slice(0, 2) === 'on') e[k] = attrs[k]; else e.setAttribute(k, attrs[k]); });
     (kids || []).forEach(function (c) { e.appendChild(c); }); return e;
   }
-  var selects = {}, panel, toggle, presetSel;
+  var selects = {}, panel, toggle, presetSel, statusEl, searchEl, opener, galOpener;
   function sync() {
     if (!panel) return;
-    GROUPS.forEach(function (g) { selects[g.key].value = state[g.key] || 'base'; selects[g.key].parentNode.setAttribute('data-on', state[g.key] ? '1' : ''); });
-    presetSel.value = currentPreset() || '';
+    GROUPS.forEach(function (g) {
+      selects[g.key].value = state[g.key] || 'base';
+      var row = selects[g.key].parentNode.parentNode; row.setAttribute('data-on', state[g.key] ? '1' : '');
+      row.lastChild.style.visibility = state[g.key] ? 'visible' : 'hidden';
+    });
+    var cp = currentPreset(), n = Object.keys(state).length;
+    presetSel.value = cp || '';
+    statusEl.textContent = !n ? 'Original design' : cp ? 'Preset: ' + cp : 'Custom - ' + n + ' changed';
   }
   function allPresets() { var o = {}, u = {}; try { u = JSON.parse(lsGet(PKEY) || '{}'); } catch (e) { } Object.keys(PRESETS).forEach(function (k) { o[k] = PRESETS[k]; }); Object.keys(u).forEach(function (k) { o[k] = u[k]; }); return o; }
   function userPresets() { try { return JSON.parse(lsGet(PKEY) || '{}'); } catch (e) { return {}; } }
@@ -163,8 +229,8 @@
   function fillPresets() {
     var u = userPresets(); presetSel.textContent = '';
     presetSel.appendChild(h('option', { value: '', text: 'Presets...' }));
-    var og = h('optgroup', { label: 'Built-in' }); Object.keys(PRESETS).forEach(function (n) { og.appendChild(h('option', { value: n, text: n })); }); presetSel.appendChild(og);
-    var ks = Object.keys(u); if (ks.length) { var og2 = h('optgroup', { label: 'Yours' }); ks.forEach(function (n) { og2.appendChild(h('option', { value: n, text: n })); }); presetSel.appendChild(og2); }
+    var og = h('optgroup', { label: 'Built-in' }); Object.keys(PRESETS).forEach(function (n) { og.appendChild(h('option', { value: n, text: n, title: PRESET_META[n] || n })); }); presetSel.appendChild(og);
+    var ks = Object.keys(u); if (ks.length) { var og2 = h('optgroup', { label: 'Yours' }); ks.forEach(function (n) { og2.appendChild(h('option', { value: n, text: n, title: 'Saved preset' })); }); presetSel.appendChild(og2); }
   }
   function bad(o) { return BAD.some(function (p) { return p[0] !== p[1] && p.every(function (x) { var a = x.split(':'); return o[a[0]] === a[1]; }); }); }
   function randomize() {
@@ -196,7 +262,17 @@
     pbtn('Save', function () { var n = (prompt('Preset name') || '').trim(); if (!n || PRESETS[n]) return; var u = userPresets(); u[n] = JSON.parse(JSON.stringify(state)); lsSet(PKEY, JSON.stringify(u)); fillPresets(); presetSel.value = n; });
     pbtn('Rename', function () { var u = userPresets(), o = presetSel.value; if (!u[o]) return; var n = (prompt('New name', o) || '').trim(); if (!n || PRESETS[n] || u[n]) return; u[n] = u[o]; delete u[o]; lsSet(PKEY, JSON.stringify(u)); fillPresets(); presetSel.value = n; });
     pbtn('Delete', function () { var u = userPresets(); if (!u[presetSel.value]) return; delete u[presetSel.value]; lsSet(PKEY, JSON.stringify(u)); fillPresets(); });
-    panel.appendChild(head); panel.appendChild(tools); panel.appendChild(pr);
+    statusEl = h('div', { class: 'lab-status', 'aria-live': 'polite' });
+    searchEl = h('input', { type: 'search', class: 'lab-search', placeholder: 'Filter options...', 'aria-label': 'Filter design options' });
+    searchEl.oninput = function () {
+      var q = searchEl.value.trim().toLowerCase();
+      GROUPS.forEach(function (g) {
+        var hit = !q || (g.label + ' ' + g.theme).toLowerCase().indexOf(q) > -1 || g.options.some(function (o) { return (o.name + ' ' + o.title).toLowerCase().indexOf(q) > -1; });
+        selects[g.key].parentNode.parentNode.hidden = !hit;
+      });
+      panel.querySelectorAll('fieldset').forEach(function (f) { f.hidden = !f.querySelector('.lab-row:not([hidden])'); });
+    };
+    panel.appendChild(head); panel.appendChild(statusEl); panel.appendChild(searchEl); panel.appendChild(tools); panel.appendChild(pr);
     var themes = {};
     GROUPS.forEach(function (g) {
       if (!themes[g.theme]) { themes[g.theme] = h('fieldset', {}, [h('legend', { text: g.theme })]); panel.appendChild(themes[g.theme]); }
@@ -204,23 +280,37 @@
       g.options.forEach(function (o) { sel.appendChild(h('option', { value: o.id, text: o.name, title: o.title })); });
       sel.onchange = function () { set(g.key, sel.value); };
       selects[g.key] = sel;
-      themes[g.theme].appendChild(h('label', { for: 'lab-s-' + g.key }, [h('span', { text: g.label }), sel]));
+      var rb = h('button', { type: 'button', class: 'lab-rs', 'aria-label': 'Reset ' + g.label, title: 'Reset ' + g.label, text: '↺' });
+      rb.onclick = function () { set(g.key, 'base'); };
+      themes[g.theme].appendChild(h('div', { class: 'lab-row' }, [h('label', { for: 'lab-s-' + g.key }, [h('span', { text: g.label }), sel]), rb]));
     });
     document.body.appendChild(toggle); document.body.appendChild(panel);
     toggle.onclick = function () { panel.hidden ? open() : close(); };
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (gal && !gal.hidden) gal.hidden = true; else if (!panel.hidden) { close(); toggle.focus(); } } });
+    trap(panel);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (gal && !gal.hidden) closeGal(); else if (!panel.hidden) close(); } });
   }
-  function open() { panel.hidden = false; toggle.setAttribute('aria-expanded', 'true'); panel.querySelector('select').focus(); }
-  function close() { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); }
+  function trap(el) {
+    el.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var f = Array.prototype.filter.call(el.querySelectorAll('button,select,input,a[href],[tabindex]:not([tabindex="-1"])'), function (x) { return !x.disabled && x.getClientRects().length && getComputedStyle(x).visibility !== 'hidden'; });
+      if (!f.length) return;
+      var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && (document.activeElement === first || !el.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && (document.activeElement === last || !el.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+    });
+  }
+  function open() { opener = document.activeElement; panel.hidden = false; toggle.setAttribute('aria-expanded', 'true'); searchEl.focus(); }
+  function close() { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); var t = opener && document.contains(opener) && opener !== document.body ? opener : toggle; t.focus(); }
+  function closeGal() { gal.hidden = true; var t = galOpener && document.contains(galOpener) ? galOpener : toggle; t.focus(); }
 
   /* ---------- gallery ---------- */
   var gal;
   function openGallery() {
     if (!gal) {
       gal = h('div', { id: 'lab-gallery', role: 'dialog', 'aria-label': 'Option gallery', hidden: '' });
-      document.body.appendChild(gal);
+      document.body.appendChild(gal); trap(gal);
     }
-    gal.hidden = false; gal.textContent = '';
+    galOpener = document.activeElement; gal.hidden = false; gal.textContent = '';
     var gs = h('select', { 'aria-label': 'Group' });
     GROUPS.forEach(function (g) { gs.appendChild(h('option', { value: g.key, text: g.label })); });
     var cur = Object.keys(state)[0] || 'card'; gs.value = cur;
@@ -230,13 +320,14 @@
       g.options.forEach(function (o) {
         var qs = new URLSearchParams(state); qs.set(g.key, o.id); if (o.id === 'base') qs.delete(g.key);
         var f = h('iframe', { loading: 'lazy', title: g.label + ': ' + o.name, tabindex: '-1', src: location.pathname + '?lab=solo&t=' + encodeURIComponent(g.solo) + '#' + qs.toString() });
-        var b = h('button', { type: 'button', class: 'lab-tile', title: o.title }, [f, h('span', { text: o.name })]);
-        b.onclick = function () { set(g.key, o.id); gal.hidden = true; };
+        var on = (state[g.key] || 'base') === o.id;
+        var b = h('button', { type: 'button', class: 'lab-tile', title: o.title, 'aria-pressed': on ? 'true' : 'false' }, [f, h('span', { class: 'lab-tn', text: o.name }), h('span', { class: 'lab-td', text: o.title || '' })]);
+        b.onclick = function () { set(g.key, o.id); closeGal(); };
         grid.appendChild(b);
       });
     }
     gs.onchange = draw;
-    gal.appendChild(h('div', { class: 'lab-ghead' }, [h('strong', { text: 'Gallery' }), gs, h('button', { type: 'button', text: 'Close', onclick: function () { gal.hidden = true; } })]));
+    gal.appendChild(h('div', { class: 'lab-ghead' }, [h('strong', { text: 'Gallery' }), gs, h('button', { type: 'button', text: 'Close', onclick: closeGal })]));
     gal.appendChild(grid); draw(); gs.focus();
   }
 
