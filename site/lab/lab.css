@@ -66,10 +66,10 @@ body[data-fill="ink"] .card{background-image:none;background-color:#0a0a0d}
 body[data-fill="vgrad"] .card{background-image:linear-gradient(180deg,#1a1a20,#0a0a0d)}
 body[data-fill="sheen"] .card{background-image:linear-gradient(115deg,#ffffff10 0,transparent 36%,transparent 64%,#e3b34114 100%),linear-gradient(var(--data-fill,var(--surface)),var(--data-fill,var(--surface)))}
 body[data-fill="grain"] .card{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.12'/%3E%3C/svg%3E"),linear-gradient(var(--data-fill,var(--surface)),var(--data-fill,var(--surface)))}
-body[data-fill="parchment"] .card{background-image:radial-gradient(120% 90% at 18% 0,#96703219,transparent 60%),repeating-linear-gradient(0deg,#ffe6b406 0 1px,transparent 1px 3px),linear-gradient(#16110b,#100d08)}
-body[data-fill="duotone"] .card{background-image:linear-gradient(160deg,color-mix(in srgb,var(--accent) 17%,#0d0d10),#09090c 72%)}
+body[data-fill="parchment"] .card{background-image:radial-gradient(120% 90% at 18% 0,#9670320d,transparent 60%),repeating-linear-gradient(0deg,#ffe6b406 0 1px,transparent 1px 3px),linear-gradient(#120e09,#0d0a07)}
+body[data-fill="duotone"] .card{background-image:linear-gradient(160deg,color-mix(in srgb,var(--accent) 7%,#0d0d10),#09090c 72%)}
 body[data-fill="scanline"] .card{background-image:repeating-linear-gradient(0deg,#ffffff09 0 1px,transparent 1px 3px),linear-gradient(var(--data-fill,var(--surface)),var(--data-fill,var(--surface)))}
-body[data-fill="smoke"] .card{background-image:radial-gradient(ellipse 80% 70% at 88% 8%,#e3b3411c,transparent 62%),radial-gradient(ellipse 60% 60% at 0 100%,#ffffff0a,transparent 70%),linear-gradient(var(--data-fill,var(--surface)),var(--data-fill,var(--surface)))}
+body[data-fill="smoke"] .card{background-image:radial-gradient(ellipse 80% 70% at 88% 8%,#e3b34110,transparent 62%),radial-gradient(ellipse 60% 60% at 0 100%,#ffffff06,transparent 70%),linear-gradient(var(--data-fill,var(--surface)),var(--data-fill,var(--surface)))}
 
 /* frames (no box-shadow here; those belong to elevation) */
 body[data-frame="double"] .card{outline:1px solid var(--line-strong);outline-offset:3px}
@@ -215,7 +215,7 @@ body[data-nums="quiet"] main .tabular:not(.text-3xl):not(.text-2xl):not(.eplate)
 body[data-nums="bigvalue"] main .text-3xl.tabular,body[data-nums="bigvalue"] main .text-2xl.tabular{font-size:1.4em}
 body[data-nums="bigvalue"] main [data-lab=tiles] .tabular{font-size:1.25em}
 body[data-nums="condensed"] main :is(.tabular,.font-mono,.eplate){letter-spacing:-.07em}
-body[data-nums="slashedzero"] main :is(.tabular,.font-mono,.eplate){font-feature-settings:"zero" 1,"ss01" 1;font-variant-numeric:slashed-zero tabular-nums}
+body[data-nums="boxed"] main [data-lab=tiles] .tabular{display:inline-block;border:1px solid var(--accent-line);background:var(--accent-soft);padding:0 8px;font-variant-numeric:tabular-nums lining-nums}
 
 /* resist meters */
 body[data-meter="plain"] [data-io] .etrough,body[data-meter="delta"] [data-io] .etrough{display:none}
@@ -261,7 +261,7 @@ body[data-sev="glyph"] .chip[class*="text-good"]::before{content:"\25A0"}
 body[data-sev="glyph"] .chip[class*="text-warn"]::before{content:"\25B2"}
 body[data-sev="glyph"] .chip[class*="text-danger"]::before{content:"\25C6"}
 body[data-sev="rowtint"] li[data-status]{padding:6px 10px;margin:0 -10px;background:color-mix(in srgb,var(--lab-sev-unknown) 10%,transparent)}
-body[data-sev="outline"] .chip[class*="text-"]{background:transparent;border-color:currentColor}
+body[data-sev="underscore"] .chip[class*="text-"]{background:transparent;border-width:0 0 2px;padding-inline:1px}
 body[data-sev="filled"] .chip[class*="text-"]{border-color:transparent;color:#0b0b0d;font-weight:700}
 body[data-sev="filled"] .chip[class*="text-good"]{background:var(--lab-sev-pass)}
 body[data-sev="filled"] .chip[class*="text-warn"]{background:var(--lab-sev-warn)}
