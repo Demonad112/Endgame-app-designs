@@ -43,6 +43,8 @@ Defined in `PRESETS`; one-line titles in `PRESET_META` (used as the `<option tit
 | `dmg` | Damage colour | `tint`, `patterned`, `mono`, `legend`, `swatch` |
 | `findings` | Findings list | `timeline`, `accordion`, `split`, `bands`, `rail`, `oneliners`, `columns`, `index`, `cards` |
 | `recs` | Recommendations | `stepcards`, `stepper`, `beforeafter`, `grid` (3-up bordered tiles, big number), `lanes` (full-width rows, left lane header), `sticky`, `receipt` |
+| `gear` | Gear layout | `ladder` (worst gap first, gap meter, band stripe), `slots` (paperdoll grid), `compact` (aligned one-row-per-slot) |
+| `gdelta` | Skill gear changes | `delta` (tier-range pips), `tags` (slot tag, hover/focus/click lights the gear card), `compact` (one-liners) |
 | `nav` | Section navigation | `tabs`, `rail`, `chips`, `jump`, `progress`, `none` |
 | `disclose` | Disclosure | `tabs`, `open`, `accordion`, `pro`, `hover` |
 | `hero` | Page hero | `compact`, `plate`, `banner`, `split`, `crumb`, `minimal`, `ledgerhead` |
@@ -60,3 +62,15 @@ Defined in `PRESETS`; one-line titles in `PRESET_META` (used as the `<option tit
 
 - `disclose=tabs`: `lab.js` builds a `role=tablist` for each run of 2+ sibling `main details.card`; roving tabindex, Arrow/Home/End, panels get `role=tabpanel` + `aria-labelledby`; inactive panels use `[data-lab-off]{display:none!important}`. Switching away restores each card's original open state.
 - Narrow fallbacks: `head=side` below 768px is a spine strip; `head=hanging` below 1380px is a small-caps label with a left hairline; `nav=rail` below 1280px is a sticky scroll-snap rail with scroll-spy underline.
+
+## Gear hooks
+
+Attributes only, no content edits (added to `site/character/index.html`; `?lab=0` and the no-lab page render identically). A re-export of the snapshot drops them and they must be re-applied.
+
+- `#gear [data-gear-targets] > li`: `data-slot` (`main-hand|off-hand|helmet|body|gloves|boots|amulet|ring-1|ring-2|belt`), `data-band` (`far` = 7+ tiers below top, `mid` = 4-6, `near` = 0-3; heuristic), `data-gap` + `style="--gap:N"` (the number printed on the card), `data-flags` (`ilvl-cap over-res open-affix corrupted`, from the card text).
+- Skill gear list: `ul[data-lab=gdelta]` with `li[data-slot][data-from][data-to]` and `style="--from:N;--to:N"` (tier numbers from the `T3→T1` text).
+- The gap meter is relative and capped at 10 tiers; it is not a percentage. Absent slots mean "no findings", so `slots` leaves gaps instead of drawing empty slots.
+- Gear visuals never use pseudo-elements on `.card` (the `card` and `frame` groups own them); they draw on `p.label-metric::after` and the flag list's `::before`.
+- `ladder` reorders visually with `order` only; DOM and reading order are unchanged.
+- `gdelta=tags` is the one gear option with JS (`gtagsOn/gtagsOff` in `lab.js`): rows get `tabindex=0`, and hover/focus/click sets `data-lab-hot` on the matching gear card (click scrolls to it, instant). Turning the option off removes all of it.
+- `solo()` now opens ancestor `<details>` so gallery tiles whose target is inside a closed disclosure are not blank.

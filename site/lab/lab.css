@@ -547,3 +547,87 @@ body[data-disclose="tabs"] details.card[role=tabpanel]>summary{display:none}
 .lab-tile[aria-pressed=true] .lab-tn{color:var(--lab-gold)}
 .lab-tile .lab-td{padding-top:0;border:0;font-size:11px;color:var(--lab-mute);text-transform:none}
 html:has(body[data-scale]),html:has(body[data-density]){overflow-x:hidden}
+
+/* ---------- gear layout (data-gear) and skill gear changes (data-gdelta) ----------
+   Hooks: #gear li[data-slot|data-band|data-flags][style=--gap], ul[data-lab=gdelta] > li[data-slot|data-from|data-to][style=--from/--to].
+   No pseudo-elements on .card (card/frame groups own them): draw on label ::after and flag-list ::before. */
+body:is([data-gear="ladder"],[data-gear="slots"],[data-gear="compact"]) #gear [data-gear-targets]>li{--lab-band:var(--lab-sev-unknown);margin:0;border-left:4px solid var(--lab-band)}
+body:is([data-gear="ladder"],[data-gear="slots"],[data-gear="compact"]) #gear [data-gear-targets]>li[data-band="far"]{--lab-band:var(--lab-sev-fail);--n:3}
+body:is([data-gear="ladder"],[data-gear="slots"],[data-gear="compact"]) #gear [data-gear-targets]>li[data-band="mid"]{--lab-band:var(--lab-sev-warn);--n:2;border-left-width:3px}
+body:is([data-gear="ladder"],[data-gear="slots"],[data-gear="compact"]) #gear [data-gear-targets]>li[data-band="near"]{--lab-band:var(--lab-sev-pass);--n:1;border-left-width:2px}
+/* gap meter (relative, capped at 10 tiers) and band pips */
+body:is([data-gear="ladder"],[data-gear="slots"],[data-gear="compact"]) #gear [data-gear-targets]>li ul::before{content:"";display:block;height:4px;margin-bottom:6px;background:linear-gradient(90deg,var(--lab-band) 0 calc(min(var(--gap,0),10) * 10%),var(--line-strong,#3a3846) 0)}
+body:is([data-gear="ladder"],[data-gear="slots"],[data-gear="compact"]) #gear [data-gear-targets]>li p.label-metric::after{content:"";display:inline-block;vertical-align:middle;height:6px;width:calc(var(--n,1) * 10px - 4px);margin-left:8px;background:repeating-linear-gradient(90deg,var(--lab-band) 0 6px,transparent 6px 10px)}
+body:is([data-gear="ladder"],[data-gear="slots"],[data-gear="compact"]) #gear [data-gear-targets]>li[data-band="far"] .btn{border-color:var(--accent);color:var(--accent)}
+body:is([data-gear="ladder"],[data-gear="slots"],[data-gear="compact"]) #gear [data-gear-targets]>li[data-band="near"] .btn{border-color:var(--line-strong,#3a3846);color:var(--lab-mute)}
+body:is([data-gear="ladder"],[data-gear="slots"],[data-gear="compact"]) #gear [data-gear-targets]>li[data-flags~="corrupted"] p.label-metric::after{box-shadow:12px 0 0 -1px var(--lab-sev-warn)}
+
+/* ladder: worst gap first (DOM order is unchanged) */
+body[data-gear="ladder"] #gear [data-gear-targets]{display:flex;flex-direction:column;gap:var(--card-gap,10px)}
+body[data-gear="ladder"] #gear [data-gear-targets]>li{order:calc(100 - var(--gap,0))}
+body[data-gear="ladder"] #gear [data-gear-targets]>li[data-band="far"]{background-image:linear-gradient(90deg,color-mix(in srgb,var(--lab-sev-fail) 10%,transparent),transparent 40%)}
+
+/* slots: paperdoll grid. 1 col on phones, 2 col mid, areas on wide. Absent slots simply leave a gap (no findings, not empty). */
+body[data-gear="slots"] #gear [data-gear-targets]{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--card-gap,10px)}
+body[data-gear="slots"] #gear [data-gear-targets]>li{flex-direction:column;align-items:stretch;flex-wrap:nowrap;min-width:0}
+body[data-gear="slots"] #gear [data-gear-targets]>li .btn{align-self:flex-start}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="helmet"]{order:1}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="amulet"]{order:2}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="body"]{order:3}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="main-hand"]{order:4}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="off-hand"]{order:5}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="gloves"]{order:6}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="ring-1"]{order:7}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="ring-2"]{order:8}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="belt"]{order:9}
+body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="boots"]{order:10}
+@media(min-width:600px){body[data-gear="slots"] #gear [data-gear-targets]{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:901px){
+ body[data-gear="slots"] #gear [data-gear-targets]{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"amulet helmet belt" "mainhand body offhand" "ring1 gloves ring2" ". boots ."}
+ body[data-gear="slots"] #gear [data-gear-targets]>li{order:0}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="helmet"]{grid-area:helmet}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="amulet"]{grid-area:amulet}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="belt"]{grid-area:belt}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="body"]{grid-area:body}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="main-hand"]{grid-area:mainhand}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="off-hand"]{grid-area:offhand}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="ring-1"]{grid-area:ring1}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="ring-2"]{grid-area:ring2}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="gloves"]{grid-area:gloves}
+ body[data-gear="slots"] #gear [data-gear-targets]>li[data-slot="boots"]{grid-area:boots}
+}
+
+/* compact: one aligned row per slot */
+body[data-gear="compact"] #gear [data-gear-targets]{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--card-gap,8px)}
+body[data-gear="compact"] #gear [data-gear-targets]>li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;align-items:center}
+body[data-gear="compact"] #gear [data-gear-targets]>li>div{display:contents}
+body[data-gear="compact"] #gear [data-gear-targets]>li p.label-metric{grid-column:1;grid-row:1}
+body[data-gear="compact"] #gear [data-gear-targets]>li p.truncate{grid-column:1/-1;grid-row:2;min-width:0}
+body[data-gear="compact"] #gear [data-gear-targets]>li>span{grid-column:2;grid-row:1;justify-self:end}
+body[data-gear="compact"] #gear [data-gear-targets]>li ul{grid-column:1/-1;grid-row:3;display:flex;flex-wrap:wrap;align-items:center;gap:2px 12px;margin:0}
+body[data-gear="compact"] #gear [data-gear-targets]>li ul::before{flex:none;width:7rem;margin:0}
+body[data-gear="compact"] #gear [data-gear-targets]>li>a{grid-column:1/-1;grid-row:4;justify-self:start;margin-top:6px}
+@media(min-width:620px){
+ body[data-gear="compact"] #gear [data-gear-targets]>li{grid-template-columns:8rem minmax(0,1fr) auto auto;gap:2px 16px}
+ body[data-gear="compact"] #gear [data-gear-targets]>li p.label-metric{grid-column:1;grid-row:1}
+ body[data-gear="compact"] #gear [data-gear-targets]>li p.truncate{grid-column:2;grid-row:1}
+ body[data-gear="compact"] #gear [data-gear-targets]>li>span{grid-column:3;grid-row:1}
+ body[data-gear="compact"] #gear [data-gear-targets]>li ul{grid-column:2/4;grid-row:2}
+ body[data-gear="compact"] #gear [data-gear-targets]>li>a{grid-column:4;grid-row:1/span 2;margin-top:0;justify-self:end}
+}
+
+/* skill gear changes */
+body[data-gdelta="delta"] [data-lab=gdelta]>li>div:first-child>span.tabular::after{content:"";display:inline-block;vertical-align:middle;width:38px;height:8px;margin-left:8px;background:
+ repeating-linear-gradient(90deg,transparent 0 8px,var(--well,#0b0b0e) 8px 10px),
+ linear-gradient(var(--accent),var(--accent)) calc((4 - var(--from,3)) * 10px) 0/calc((var(--from,3) - var(--to,1) + 1) * 10px) 100% no-repeat,
+ var(--line-strong,#3a3846)}
+body[data-gdelta="tags"] [data-lab=gdelta]>li{position:relative;cursor:pointer}
+body[data-gdelta="tags"] [data-lab=gdelta]>li::before{content:attr(data-slot);display:inline-block;margin-bottom:4px;padding:1px 6px;border:1px solid var(--accent-line);font:600 10px/1.4 var(--lab-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+body[data-gdelta="tags"] [data-lab=gdelta]>li:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+[data-lab-hot]{outline:2px solid var(--accent)!important;outline-offset:2px;background-image:linear-gradient(var(--accent-soft),var(--accent-soft))!important}
+body[data-gdelta="compact"] [data-lab=gdelta]>li{padding-block:3px}
+body[data-gdelta="compact"] [data-lab=gdelta]>li>div:first-child{flex-wrap:nowrap;align-items:center}
+body[data-gdelta="compact"] [data-lab=gdelta]>li>div:first-child>span.flex-1{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body[data-gdelta="compact"] [data-lab=gdelta]>li>div:first-child>.chip{flex:none}
+body[data-gdelta="compact"] [data-lab=gdelta]>li>div:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:480px){body[data-gdelta="compact"] [data-lab=gdelta]>li>div:first-child>.chip{display:none}}

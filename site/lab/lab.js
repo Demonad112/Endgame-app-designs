@@ -30,6 +30,8 @@
     G('dmg', 'Damage colour', S2, '#defences .card:has([data-io])', 'tint|Text tint|Label tinted by element;patterned|Patterned|Hatch per element (colour-blind safe);mono|Mono gold|One gold for all;legend|Legend chips|Labels as colour-keyed chips;swatch|Swatch|Square swatch beside label'),
     G('findings', 'Findings list', S3, '#findings ul', 'timeline|Timeline|Thread connectors;accordion|Accordion|Compact rows, detail on hover;split|Split|Problem and fix side by side;bands|Bands|Full-width alternating bands, no cards;rail|Rail|Severity-ordered rail;oneliners|One-liners|Single-line rows;columns|Columns|Columns by severity;index|Index|Numbered index first;cards|Cards|Single-column cards'),
     G('recs', 'Recommendations', S3, '[data-top-fixes]', 'stepcards|Step cards|Heavy numbered steps;stepper|Stepper|Vertical stepper line;beforeafter|Before / after|Two-pane pairs;grid|Grid|Three-up bordered tiles, big number;lanes|Lanes|Full-width rows, lane header on the left;sticky|Next action|Sticky next-action strip;receipt|Receipt|Narrow ledger slip'),
+    G('gear', 'Gear layout', S3, '#gear', 'ladder|Priority ladder|Worst gap first, with gap meter and band stripe;slots|Slot grid|Paperdoll-style slot layout;compact|Compact rows|One aligned row per slot'),
+    G('gdelta', 'Skill gear changes', S3, '[data-lab=gdelta]', 'delta|Tier range|Pips show the tier jump;tags|Slot tags|Slot tag; hover or focus lights the gear card;compact|One-liners|Single-line rows'),
     G('nav', 'Section navigation', S3, '#findings', 'tabs|Sticky tabs|Strong sticky tab bar;rail|Left rail|Left rail with scroll-spy (scroll rail on narrow screens);chips|Chips|Anchor chips;jump|Jump menu|Select menu;progress|Progress rule|Scroll progress line;none|None|Hide navigation'),
     G('disclose', 'Disclosure', S3, '#findings', 'tabs|Tabs|Card disclosures become a tab set;open|All open|Open everything;accordion|Accordion|One open at a time;pro|Pro detail|Detail text on hover or focus;hover|Hover reveal|Reveal on hover / tap'),
     G('hero', 'Page hero', S3, '[data-showcase]', 'compact|Compact line|Tight title;plate|Plate|Class plate;banner|Banner|Wide banner;split|Split|Meta to the right;crumb|Crumb|Breadcrumb style;minimal|Minimal|Bare;ledgerhead|Ledger head|Rule and meta columns'),
@@ -47,18 +49,18 @@
   function valid(k, v) { var g = BY[k]; return g && g.options.some(function (o) { return o.id === v; }); }
 
   var PRESETS = {
-    'Archive': { card: 'engraved', fill: 'parchment', frame: 'double', head: 'rule', divider: 'ornament', grade: 'seal', rows: 'leaders', nums: 'oldstyle', meter: 'underline', sev: 'glyph', accent: 'antique', bg: 'vignette', htype: 'smallcaps', chip: 'bracketed' },
-    'Ledger': { card: 'flat', fill: 'ink', frame: 'tickframe', head: 'overline', divider: 'ledger', grade: 'margin', rows: 'ruled', nums: 'boxed', meter: 'ruler', sev: 'margin', findings: 'bands', htype: 'tracked', chip: 'monocaps', bg: 'grid' },
-    'Plate': { card: 'raised', fill: 'vgrad', frame: 'rivets', head: 'strip', divider: 'diamond', grade: 'slab', rows: 'tabbed', nums: 'keygold', meter: 'segments', sev: 'badge', hero: 'plate', accent: 'brass', htype: 'underline' },
-    'Quiet': { card: 'bare', fill: 'clear', frame: 'spaced', head: 'minimal', divider: 'fade', density: 'spacious', grade: 'letter', rows: 'centered', nums: 'mono', meter: 'plain', sev: 'square', htype: 'smallcaps', scale: 'airy', grid: 'rail', accent: 'champagne', footer: 'minimal', chip: 'underlined' },
-    'Dense Ops': { card: 'flat', fill: 'ink', frame: 'barL', head: 'marker', divider: 'rule', density: 'compact', grid: '3col', grade: 'ticks', rows: 'table', nums: 'condensed', meter: 'notched', sev: 'tag', findings: 'oneliners', scale: 'tight', accent: 'amber', chip: 'monocaps', nav: 'tabs' },
-    'Editorial': { card: 'bare', fill: 'clear', frame: 'spaced', head: 'hanging', divider: 'chapter', density: 'luxe', grid: 'gutter', grade: 'letter', rows: 'valuefirst', nums: 'oldstyle', meter: 'underline', htype: 'split', scale: 'editorial', hero: 'ledgerhead', accent: 'champagne', findings: 'timeline', chip: 'underlined' },
-    'Relic': { card: 'toplit', fill: 'smoke', frame: 'notch', head: 'tab', divider: 'ornament', grade: 'underbar', rows: 'plinth', nums: 'keygold', meter: 'capmark', sev: 'stripe', bg: 'corners', accent: 'bronze', htype: 'foil', motion: 'drawin' },
-    'Blueprint': { card: 'cutout', fill: 'scanline', frame: 'dashed', head: 'overline', divider: 'ticks', grade: 'band', rows: 'pairs', nums: 'sans', meter: 'ruler', sev: 'underscore', bg: 'grid', htype: 'tracked', chip: 'bracketed', nav: 'chips' },
-    'Field Report': { card: 'shelf', fill: 'grain', frame: 'barT', head: 'rule', divider: 'ledger', grade: 'badge', rows: 'zebra', nums: 'lining', meter: 'heat', sev: 'rowtint', recs: 'stepper', findings: 'split', accent: 'brass', bg: 'hatch' },
-    'Vault': { card: 'underglow', fill: 'duotone', frame: 'brackets', head: 'strip', divider: 'diamond', grade: 'stencil', rows: 'chips', nums: 'keygold', meter: 'spark', sev: 'filled', dmg: 'patterned', bg: 'fog', accent: 'rose', htype: 'outlined', motion: 'lift', states: 'glow' },
-    'Telegraph': { card: 'stepped', fill: 'ink', frame: 'double', head: 'side', divider: 'rule', grade: 'segbar', rows: 'leaders', nums: 'condensed', meter: 'delta', sev: 'traffic', recs: 'receipt', hero: 'banner', htype: 'tracked', chip: 'monocaps', footer: 'plate' },
-    'Codex': { card: 'stack', fill: 'parchment', frame: 'barL', head: 'marker', divider: 'chapter', grade: 'ladder', rows: 'ruled', nums: 'oldstyle', meter: 'segments', sev: 'glyph', findings: 'index', hero: 'crumb', htype: 'numbered', accent: 'antique', bg: 'vignette', scale: 'editorial' }
+    'Archive': { card: 'engraved', fill: 'parchment', frame: 'double', head: 'rule', divider: 'ornament', grade: 'seal', rows: 'leaders', nums: 'oldstyle', meter: 'underline', sev: 'glyph', accent: 'antique', bg: 'vignette', htype: 'smallcaps', chip: 'bracketed', gear: 'ladder', gdelta: 'delta' },
+    'Ledger': { card: 'flat', fill: 'ink', frame: 'tickframe', head: 'overline', divider: 'ledger', grade: 'margin', rows: 'ruled', nums: 'boxed', meter: 'ruler', sev: 'margin', findings: 'bands', htype: 'tracked', chip: 'monocaps', bg: 'grid', gear: 'compact', gdelta: 'compact' },
+    'Plate': { card: 'raised', fill: 'vgrad', frame: 'rivets', head: 'strip', divider: 'diamond', grade: 'slab', rows: 'tabbed', nums: 'keygold', meter: 'segments', sev: 'badge', hero: 'plate', accent: 'brass', htype: 'underline', gear: 'slots', gdelta: 'tags' },
+    'Quiet': { card: 'bare', fill: 'clear', frame: 'spaced', head: 'minimal', divider: 'fade', density: 'spacious', grade: 'letter', rows: 'centered', nums: 'mono', meter: 'plain', sev: 'square', htype: 'smallcaps', scale: 'airy', grid: 'rail', accent: 'champagne', footer: 'minimal', chip: 'underlined', gear: 'ladder', gdelta: 'compact' },
+    'Dense Ops': { card: 'flat', fill: 'ink', frame: 'barL', head: 'marker', divider: 'rule', density: 'compact', grid: '3col', grade: 'ticks', rows: 'table', nums: 'condensed', meter: 'notched', sev: 'tag', findings: 'oneliners', scale: 'tight', accent: 'amber', chip: 'monocaps', nav: 'tabs', gear: 'compact', gdelta: 'compact' },
+    'Editorial': { card: 'bare', fill: 'clear', frame: 'spaced', head: 'hanging', divider: 'chapter', density: 'luxe', grid: 'gutter', grade: 'letter', rows: 'valuefirst', nums: 'oldstyle', meter: 'underline', htype: 'split', scale: 'editorial', hero: 'ledgerhead', accent: 'champagne', findings: 'timeline', chip: 'underlined', gear: 'ladder', gdelta: 'delta' },
+    'Relic': { card: 'toplit', fill: 'smoke', frame: 'notch', head: 'tab', divider: 'ornament', grade: 'underbar', rows: 'plinth', nums: 'keygold', meter: 'capmark', sev: 'stripe', bg: 'corners', accent: 'bronze', htype: 'foil', motion: 'drawin', gear: 'slots', gdelta: 'delta' },
+    'Blueprint': { card: 'cutout', fill: 'scanline', frame: 'dashed', head: 'overline', divider: 'ticks', grade: 'band', rows: 'pairs', nums: 'sans', meter: 'ruler', sev: 'underscore', bg: 'grid', htype: 'tracked', chip: 'bracketed', nav: 'chips', gear: 'compact', gdelta: 'delta' },
+    'Field Report': { card: 'shelf', fill: 'grain', frame: 'barT', head: 'rule', divider: 'ledger', grade: 'badge', rows: 'zebra', nums: 'lining', meter: 'heat', sev: 'rowtint', recs: 'stepper', findings: 'split', accent: 'brass', bg: 'hatch', gear: 'ladder', gdelta: 'tags' },
+    'Vault': { card: 'underglow', fill: 'duotone', frame: 'brackets', head: 'strip', divider: 'diamond', grade: 'stencil', rows: 'chips', nums: 'keygold', meter: 'spark', sev: 'filled', dmg: 'patterned', bg: 'fog', accent: 'rose', htype: 'outlined', motion: 'lift', states: 'glow', gear: 'slots', gdelta: 'tags' },
+    'Telegraph': { card: 'stepped', fill: 'ink', frame: 'double', head: 'side', divider: 'rule', grade: 'segbar', rows: 'leaders', nums: 'condensed', meter: 'delta', sev: 'traffic', recs: 'receipt', hero: 'banner', htype: 'tracked', chip: 'monocaps', footer: 'plate', gear: 'compact', gdelta: 'delta' },
+    'Codex': { card: 'stack', fill: 'parchment', frame: 'barL', head: 'marker', divider: 'chapter', grade: 'ladder', rows: 'ruled', nums: 'oldstyle', meter: 'segments', sev: 'glyph', findings: 'index', hero: 'crumb', htype: 'numbered', accent: 'antique', bg: 'vignette', scale: 'editorial', gear: 'ladder', gdelta: 'tags' }
   };
   var PRESET_META = {
     'Archive': 'Dark parchment, engraved double frames, old-style figures, antique gold.',
@@ -144,8 +146,27 @@
       grp[0].parentNode.insertBefore(list, grp[0]); tabSets.push(set); pick(0, false);
     });
   }
+  var gtags = null;
+  function gtagsOff() {
+    if (!gtags) return;
+    gtags.forEach(function (x) { x.el.removeAttribute('tabindex'); x.ev.forEach(function (e) { x.el.removeEventListener(e[0], e[1]); }); });
+    document.querySelectorAll('[data-lab-hot]').forEach(function (c) { c.removeAttribute('data-lab-hot'); });
+    gtags = null;
+  }
+  function gtagsOn() {
+    if (gtags) return;
+    gtags = [];
+    document.querySelectorAll('[data-lab=gdelta]>li[data-slot]').forEach(function (r) {
+      var s = r.getAttribute('data-slot');
+      function lit(on) { document.querySelectorAll('#gear [data-slot]').forEach(function (c) { if (on && c.getAttribute('data-slot') === s) c.setAttribute('data-lab-hot', ''); else c.removeAttribute('data-lab-hot'); }); }
+      function go(e) { if (e.type === 'keydown' && e.key !== 'Enter') return; var c = document.querySelector('#gear [data-slot="' + s + '"]'); if (c) c.scrollIntoView(); }
+      var ev = [['mouseenter', function () { lit(true); }], ['mouseleave', function () { lit(false); }], ['focusin', function () { lit(true); }], ['focusout', function () { lit(false); }], ['click', go], ['keydown', go]];
+      r.tabIndex = 0; ev.forEach(function (e) { r.addEventListener(e[0], e[1]); }); gtags.push({ el: r, ev: ev });
+    });
+  }
   function behaviours() {
     var d = state.disclose;
+    if (state.gdelta === 'tags') gtagsOn(); else gtagsOff();
     if (d !== 'tabs') tabsOff(); else tabsOn();
     if (d === 'open') document.querySelectorAll('main details').forEach(function (e) { e.open = true; });
     if (state.nav === 'rail' && !spy && 'IntersectionObserver' in window) {
@@ -185,6 +206,7 @@
     t.querySelectorAll('details').forEach(function (d) { d.open = true; });
     if (t.matches('details')) t.open = true;
     for (var n = t; n && n !== body; n = n.parentNode) {
+      if (n.matches && n.matches('details')) n.open = true;
       Array.prototype.forEach.call(n.parentNode.children, function (c) { if (c !== n && c.tagName !== 'SCRIPT' && c.tagName !== 'LINK') c.setAttribute('data-lab-hide', ''); });
     }
   }
