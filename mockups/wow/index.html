@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en" data-intensity="standard" data-speed="normal" data-accent="gold" data-motion="auto">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wow gallery</title>
+<!-- Site tokens + self-hosted fonts (EB Garamond, Inter, Geist Mono) -->
+<link rel="stylesheet" href="../../site/_next/static/chunks/0ovj3vvk56tcs.css">
+<style>
+:root{--font-inter:"inter";--font-garamond:"garamond";--font-geist-mono:"geistMono";--k:1;--d:200ms;--ease:cubic-bezier(.2,.7,.2,1)}
+html[data-intensity=calm]{--k:.5}html[data-intensity=bold]{--k:1.8}
+html[data-speed=fast]{--d:120ms}html[data-speed=slow]{--d:400ms}
+html[data-accent=gold]{--s-bad:var(--accent);--s-mid:var(--accent);--s-ok:var(--ink-dim)}
+html[data-accent=status]{--s-bad:var(--danger);--s-mid:var(--warn);--s-ok:var(--good)}
+*{box-sizing:border-box;border-radius:0!important}
+body{margin:0;background:var(--page);color:var(--ink);font:400 15px/1.5 var(--font-body)}
+.wrap{max-width:1240px;margin:0 auto;padding:32px 16px 64px}
+h1{font:600 clamp(28px,4vw,40px)/1.1 var(--font-heading);text-transform:uppercase;letter-spacing:.04em;margin:0 0 6px}
+.lede{color:var(--ink-dim);margin:0 0 24px;max-width:62ch}
+.lbl{font:500 11px/1.3 var(--font-label);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute)}
+svg.i{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:square;stroke-linejoin:miter}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* switches */
+.ctl{display:flex;flex-wrap:wrap;gap:12px 24px;padding:16px;background:var(--surface);border:1px solid var(--line);margin-bottom:20px}
+.ctl fieldset{border:0;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.seg{display:flex;flex-wrap:wrap}
+.seg label{position:relative}
+.seg input{position:absolute;opacity:0;inset:0;margin:0}
+.seg span{display:block;padding:8px 12px;min-height:36px;border:1px solid var(--line-strong);margin-right:-1px;font-size:13px;color:var(--ink-dim);cursor:pointer;background:var(--sunken)}
+.seg input:checked+span{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:600}
+.seg input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px;position:relative;z-index:1}
+/* tabs */
+.tabs{display:flex;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:24px}
+.tabs button{all:unset;cursor:pointer;padding:12px 16px;min-height:20px;font:500 13px/1.2 var(--font-label);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-dim);border-bottom:2px solid transparent;margin-bottom:-1px}
+.tabs button[aria-selected=true]{color:var(--ink);border-color:var(--accent)}
+.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,540px),1fr));gap:20px}
+/* swatch */
+.sw{background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
+.sw>header{display:grid;grid-template-columns:1fr auto;gap:4px 12px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.sw h2{font:600 17px/1.2 var(--font-heading);margin:0}
+.sw .use{grid-column:1;color:var(--ink-dim);font-size:13px;margin:0}
+.sw .cost{grid-column:1;justify-self:start;font:500 11px/1 var(--font-label);letter-spacing:.08em;text-transform:uppercase;padding:4px 6px;border:1px solid var(--line-strong);color:var(--ink-dim)}
+.sw .cost[data-c=css]::before{content:"■ "}.sw .cost[data-c=js]::before{content:"◆ "}.sw .cost[data-c=hyd]::before{content:"▲ ";color:var(--accent)}
+.rp{grid-column:2;grid-row:1/4;align-self:center;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;background:var(--raised);color:var(--ink);border:1px solid var(--line-strong);font:500 13px/1 var(--font-body);cursor:pointer}
+.rp:hover{background:var(--overlay)}
+.stage{padding:16px;flex:1;background:var(--page);position:relative;overflow:hidden}
+/* gear card (real data from site/character/#gear) */
+.gl{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.gc{--g:5;position:relative;display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:4px 14px;align-items:center;padding:12px 14px;background:var(--surface);border:1px solid var(--line);box-shadow:inset 0 1px 0 #ffffff08}
+.gap{text-align:center;line-height:1}
+.gap b{display:block;font:600 28px/1 var(--font-heading);font-variant-numeric:lining-nums tabular-nums;color:var(--ink)}
+.gap span{font:500 10px/1 var(--font-label);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute)}
+.gb{min-width:0}
+.gb .lbl{display:block}
+.gb h3{margin:2px 0;font:600 17px/1.2 var(--font-heading)}
+.gb p{margin:0;font-size:13px;color:var(--ink-dim)}
+.st{display:inline-flex;align-items:center;gap:6px;font:600 12px/1 var(--font-label);letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border:1px solid currentColor}
+.gc[data-v=replace] .st{color:var(--s-bad)}.gc[data-v=upgrade] .st{color:var(--s-mid)}.gc[data-v=fine] .st{color:var(--s-ok)}
+.btn{position:relative;overflow:hidden;isolation:isolate;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border:1px solid var(--accent-line);background:transparent;color:var(--ink);font:500 13px/1 var(--font-body);cursor:pointer}
+.act{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.meter{grid-column:1/-1;height:6px;background:var(--sunken);border:1px solid var(--line)}
+.meter i{display:block;height:100%;width:calc(var(--g)/9*100%);background:var(--accent);transform-origin:left}
+@media(max-width:560px){.gc{grid-template-columns:48px minmax(0,1fr)}.act{grid-column:1/-1;flex-direction:row;justify-content:space-between;align-items:center}.sw>header{grid-template-columns:1fr}.rp{grid-column:1;grid-row:auto;justify-self:start}}
+/* bars */
+.bars{display:grid;gap:10px}.bar{display:grid;grid-template-columns:96px 1fr 28px;gap:10px;align-items:center;font-size:13px}
+.bar b{font:600 15px/1 var(--font-label);text-align:right;font-variant-numeric:tabular-nums}
+.bar .meter{grid-column:auto;height:10px}
+/* worst-gap edge */
+.edge{border-left:calc(2px + 2px*var(--k)) solid var(--s-bad)}
+.edge::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);opacity:0;pointer-events:none}
+/* hover family */
+.lift::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--accent);opacity:0}
+.lift:hover,.lift:focus-within{transform:translateY(calc(-3px*var(--k)));border-color:var(--line-strong)}
+.lift:hover::before,.lift:focus-within::before{opacity:.8}
+.grow::before{content:"";position:absolute;left:-1px;top:-1px;bottom:-1px;width:calc(3px*var(--k) + 1px);background:var(--accent);transform:scaleY(.25);transform-origin:center}
+.grow:hover::before,.grow:focus-within::before{transform:scaleY(1)}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--accent);transform:scaleX(0);transform-origin:left}
+.sweep .btn:hover,.sweep .btn:focus-visible{color:var(--on-accent)}
+.sweep .btn:hover::before,.sweep .btn:focus-visible::before{transform:scaleX(1)}
+.pulse .btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.pulse .btn::after{content:"";position:absolute;inset:-6px;border:2px solid var(--accent);opacity:0;pointer-events:none}
+/* surfaces */
+.layer{background:var(--sunken);padding:12px;border:1px solid var(--line)}
+.layer>.inner{background:var(--surface);padding:12px;border:1px solid var(--line)}
+.layer .gc{background:var(--raised);border-color:var(--line-strong)}
+.gtitle{font:600 clamp(30px,5vw,44px)/1 var(--font-heading);text-transform:uppercase;letter-spacing:.06em;margin:0 0 12px;background:var(--gold-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.gtitle+.rule{height:1px;background:linear-gradient(90deg,var(--accent-line),transparent);margin-bottom:12px}
+.grain{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.tophl .gc{box-shadow:inset 0 1px 0 #ffffff1c;border-top-color:var(--line-strong)}
+.spot{--x:50%;--y:50%}
+.spot .gc{background:radial-gradient(calc(220px*var(--k)) circle at var(--x) var(--y),var(--accent-soft),transparent 70%),var(--surface)}
+/* signature */
+.big{display:grid;grid-template-columns:auto 1fr;gap:4px 20px;align-items:end;padding:20px;background:var(--surface);border:1px solid var(--line)}
+.big b{font:600 calc(72px + 40px*var(--k))/.8 var(--font-heading);font-variant-numeric:lining-nums;background:var(--gold-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.big .lbl{grid-column:1/-1}
+.stamp{position:absolute;right:14px;top:12px;font:700 calc(13px + 3px*var(--k))/1 var(--font-label);letter-spacing:.16em;padding:8px 10px;border:2px solid var(--s-bad);color:var(--s-bad);background:var(--page);transform:rotate(-4deg)}
+.ladder{display:grid;grid-template-columns:repeat(7,1fr);align-items:end;gap:6px;height:190px;padding-top:8px}
+.rung{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px;height:100%;min-width:0}
+.rung i{display:block;width:100%;height:calc((100% - 44px)*var(--g)/9);min-height:8px;background:var(--raised);border:1px solid var(--line-strong);border-top:3px solid var(--accent);transform-origin:bottom}
+.rung b{font:600 15px/1 var(--font-label)}
+.rung span{font-size:11px;color:var(--ink-dim);text-align:center;line-height:1.2;overflow-wrap:anywhere}
+.corr{border:1px solid var(--s-bad);background:repeating-linear-gradient(135deg,transparent 0 10px,color-mix(in srgb,var(--s-bad) 10%,transparent) 10px 12px),var(--surface)}
+.corr .warn{grid-column:1/-1;display:flex;gap:8px;align-items:center;padding:8px 10px;background:var(--sunken);border-left:3px solid var(--s-bad);font-size:13px;color:var(--ink)}
+.corr .warn svg{color:var(--s-bad)}
+.skel{display:grid;gap:8px}
+.sk{position:relative;overflow:hidden;height:74px;background:var(--surface);border:1px solid var(--line);display:grid;grid-template-columns:56px 1fr;gap:14px;padding:12px 14px}
+.sk::before,.sk::after{content:"";background:var(--raised)}
+.sk::after{background:linear-gradient(var(--raised) 0 14px,transparent 14px 22px,var(--raised) 22px 34px,transparent 34px)}
+.sk .sh{position:absolute;inset:0;background:linear-gradient(90deg,transparent,#ffffff0d,transparent);transform:translateX(-100%)}
+.loaded{display:none}
+/* ---------------- motion: only opacity / transform / background-color ---------------- */
+@media(prefers-reduced-motion:no-preference){
+html:not([data-motion=reduce]) .lift,html:not([data-motion=reduce]) .grow::before,html:not([data-motion=reduce]) .btn::before,html:not([data-motion=reduce]) .lift::before{transition:transform var(--d) var(--ease),opacity var(--d) var(--ease),background-color var(--d)}
+html:not([data-motion=reduce]) .run .stg>*{animation:up calc(var(--d)*2) var(--ease) both;animation-delay:calc(var(--i)*var(--d)*.4)}
+html:not([data-motion=reduce]) .run .meter i{animation:fillx calc(var(--d)*4) var(--ease) both;animation-delay:calc(var(--i,0)*var(--d)*.3)}
+html:not([data-motion=reduce]) .run .edge::after{animation:sweep calc(var(--d)*5) var(--ease) both}
+html:not([data-motion=reduce]) .run .edge{animation:up calc(var(--d)*2) var(--ease) both}
+html:not([data-motion=reduce]) .run.sim .lift{animation:hov calc(var(--d)*6) var(--ease) both}
+html:not([data-motion=reduce]) .run.sim .grow::before{animation:edgeg calc(var(--d)*6) var(--ease) both}
+html:not([data-motion=reduce]) .run.sim .btn::before{animation:fillb calc(var(--d)*6) var(--ease) both}
+html:not([data-motion=reduce]) .run.sim .pulse .btn::after,html:not([data-motion=reduce]) .pulse .btn:focus-visible::after{animation:ring calc(var(--d)*5) ease-out 2}
+html:not([data-motion=reduce]) .run .fade{animation:fade calc(var(--d)*3) var(--ease) both}
+html:not([data-motion=reduce]) .run .stamp{animation:stamp calc(var(--d)*2) cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--d)*1.5)}
+html:not([data-motion=reduce]) .run .rung i{animation:climb calc(var(--d)*2) var(--ease) both;animation-delay:calc(var(--i)*var(--d)*.5)}
+html:not([data-motion=reduce]) .run .rung b{animation:fade var(--d) both;animation-delay:calc(var(--i)*var(--d)*.5 + var(--d))}
+html:not([data-motion=reduce]) .run .corr{animation:shake calc(var(--d)*2) both}
+html:not([data-motion=reduce]) .run .corr .warn{animation:up calc(var(--d)*2) var(--ease) both;animation-delay:var(--d)}
+html:not([data-motion=reduce]) .run .sk .sh{animation:shim calc(var(--d)*5) linear 2}
+html:not([data-motion=reduce]) .run .skel{animation:out var(--d) both;animation-delay:calc(var(--d)*10)}
+html:not([data-motion=reduce]) .run .loaded{display:grid;animation:up calc(var(--d)*2) var(--ease) both;animation-delay:calc(var(--d)*11)}
+html:not([data-motion=reduce]) .run .loaded~.skel,html:not([data-motion=reduce]) .run .skel{position:absolute;inset:16px;z-index:1}
+}
+html[data-motion=reduce] .sk .sh,.sk .sh{opacity:1}
+@keyframes up{from{opacity:0;transform:translateY(calc(14px*var(--k)))}}
+@keyframes fade{from{opacity:0}}
+@keyframes out{to{opacity:0}}
+@keyframes fillx{from{transform:scaleX(0)}}
+@keyframes sweep{0%{opacity:1;transform:translateX(-100%)}80%{opacity:1}100%{opacity:0;transform:translateX(100%)}}
+@keyframes hov{30%,70%{transform:translateY(calc(-3px*var(--k)))}}
+@keyframes edgeg{30%,70%{transform:scaleY(1)}}
+@keyframes fillb{30%,70%{transform:scaleX(1)}}
+@keyframes ring{from{opacity:.9;transform:scale(.96)}to{opacity:0;transform:scale(1.08)}}
+@keyframes stamp{from{opacity:0;transform:rotate(-4deg) scale(calc(1 + .6*var(--k)))}}
+@keyframes climb{from{transform:scaleY(0)}}
+@keyframes shake{20%{transform:translateX(calc(-3px*var(--k)))}40%{transform:translateX(calc(3px*var(--k)))}60%{transform:translateX(calc(-2px*var(--k)))}80%{transform:translateX(0)}}
+@keyframes shim{to{transform:translateX(100%)}}
+.rec{margin-top:32px;padding:16px 18px;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent)}
+.rec p{margin:6px 0 0;color:var(--ink-dim);max-width:80ch}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><use href="../icons/lucide/sprite.svg#i-warning"/></svg>
+<div class="wrap">
+<p class="lbl">Endgame companion · mockup</p>
+<h1>Wow gallery</h1>
+<p class="lede">Effects shown on the real gear cards from the character page. Pick what to port; every effect has a still fallback that keeps the same look.</p>
+
+<form class="ctl" aria-label="Preview switches">
+ <fieldset><legend class="lbl">Intensity</legend><div class="seg"><label><input type="radio" name="intensity" value="calm"><span>Calm</span></label><label><input type="radio" name="intensity" value="standard" checked><span>Standard</span></label><label><input type="radio" name="intensity" value="bold"><span>Bold</span></label></div></fieldset>
+ <fieldset><legend class="lbl">Speed</legend><div class="seg"><label><input type="radio" name="speed" value="fast"><span>Fast 120ms</span></label><label><input type="radio" name="speed" value="normal" checked><span>Normal 200ms</span></label><label><input type="radio" name="speed" value="slow"><span>Slow 400ms</span></label></div></fieldset>
+ <fieldset><legend class="lbl">Accent use</legend><div class="seg"><label><input type="radio" name="accent" value="gold" checked><span>Gold only</span></label><label><input type="radio" name="accent" value="status"><span>Gold + status</span></label></div></fieldset>
+ <fieldset><legend class="lbl">Motion</legend><div class="seg"><label><input type="radio" name="motion" value="auto" checked><span>Animate</span></label><label><input type="radio" name="motion" value="reduce"><span>Reduce motion</span></label></div></fieldset>
+</form>
+
+<div class="tabs" role="tablist" aria-label="Effect groups">
+ <button role="tab" id="t1" aria-controls="p1" aria-selected="true">1 · Entrances</button>
+ <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">2 · Hover &amp; focus</button>
+ <button role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">3 · Surfaces</button>
+ <button role="tab" id="t4" aria-controls="p4" aria-selected="false" tabindex="-1">4 · Signature</button>
+</div>
+
+<!-- ============ 1 ENTRANCES ============ -->
+<section class="grid" role="tabpanel" id="p1" aria-labelledby="t1">
+ <article class="sw"><header><h2>Staggered card reveal</h2><p class="use">Use it for: the gear list arriving after import.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><ul class="gl stg">
+   <li class="gc" data-v="replace" style="--i:0"><div class="gap"><b>9</b><span>tiers</span></div><div class="gb"><span class="lbl">Helmet</span><h3>Woe Cowl</h3><p>9 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-warning"/></svg>Replace</span></div></li>
+   <li class="gc" data-v="replace" style="--i:1"><div class="gap"><b>8</b><span>tiers</span></div><div class="gb"><span class="lbl">Main Hand</span><h3>Skull Song</h3><p>8 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-warning"/></svg>Replace</span></div></li>
+   <li class="gc" data-v="upgrade" style="--i:2"><div class="gap"><b>6</b><span>tiers</span></div><div class="gb"><span class="lbl">Boots</span><h3>Mind Spur</h3><p>6 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-ilvl-cap"/></svg>Upgrade</span></div></li>
+   <li class="gc" data-v="fine" style="--i:3"><div class="gap"><b>2</b><span>tiers</span></div><div class="gb"><span class="lbl">Body Armour</span><h3>Mind Keep</h3><p>2 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-fine"/></svg>Fine</span></div></li>
+  </ul></div></article>
+
+ <article class="sw"><header><h2>Number count-up</h2><p class="use">Use it for: the one gap numeral that leads the section.</p><span class="cost" data-c="hyd">Needs JS + hydration care</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="gc" data-v="replace"><div class="gap"><b data-count="9">9</b><span>tiers</span></div><div class="gb"><span class="lbl">Helmet</span><h3>Woe Cowl</h3><p>9 tiers below the top, across its lines</p><p>1 line with resistance over the cap</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-warning"/></svg>Replace</span><button class="btn" type="button">Find better gear</button></div></div></div></article>
+
+ <article class="sw"><header><h2>Bar fill</h2><p class="use">Use it for: gap meters, so the eye reads length before numbers.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="bars">
+   <div class="bar"><span>Helmet</span><div class="meter"><i style="--g:9;--i:0"></i></div><b>9</b></div>
+   <div class="bar"><span>Main Hand</span><div class="meter"><i style="--g:8;--i:1"></i></div><b>8</b></div>
+   <div class="bar"><span>Ring 2</span><div class="meter"><i style="--g:7;--i:2"></i></div><b>7</b></div>
+   <div class="bar"><span>Boots</span><div class="meter"><i style="--g:6;--i:3"></i></div><b>6</b></div>
+   <div class="bar"><span>Ring 1</span><div class="meter"><i style="--g:5;--i:4"></i></div><b>5</b></div>
+   <div class="bar"><span>Amulet</span><div class="meter"><i style="--g:2;--i:5"></i></div><b>2</b></div>
+   <div class="bar"><span>Body Armour</span><div class="meter"><i style="--g:2;--i:6"></i></div><b>2</b></div>
+  </div></div></article>
+
+ <article class="sw"><header><h2>Edge sweep on worst gap</h2><p class="use">Use it for: marking the single card to fix first.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="gc edge" data-v="replace"><div class="gap"><b>9</b><span>tiers</span></div><div class="gb"><span class="lbl">Helmet · worst gap</span><h3>Woe Cowl</h3><p>9 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-warning"/></svg>Replace</span><button class="btn" type="button">Find better gear</button></div></div></div></article>
+</section>
+
+<!-- ============ 2 HOVER & FOCUS ============ -->
+<section class="grid" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+ <article class="sw"><header><h2>Lift + hairline highlight</h2><p class="use">Use it for: clickable gear cards. Hover or tab in.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage sim-host"><div class="gc lift" data-v="replace"><div class="gap"><b>7</b><span>tiers</span></div><div class="gb"><span class="lbl">Ring 2</span><h3>Viper Whorl</h3><p>7 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-warning"/></svg>Replace</span><button class="btn" type="button">Find better gear</button></div></div></div></article>
+
+ <article class="sw"><header><h2>Accent edge grow</h2><p class="use">Use it for: list rows where a full lift is too loud.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage sim-host"><div class="gc grow" data-v="upgrade"><div class="gap"><b>5</b><span>tiers</span></div><div class="gb"><span class="lbl">Ring 1</span><h3>Behemoth Band</h3><p>5 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-ilvl-cap"/></svg>Upgrade</span><button class="btn" type="button">Find better gear</button></div></div></div></article>
+
+ <article class="sw"><header><h2>Button fill sweep</h2><p class="use">Use it for: the primary action on each card.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage sim-host sweep"><div class="gc" data-v="upgrade"><div class="gap"><b>6</b><span>tiers</span></div><div class="gb"><span class="lbl">Boots</span><h3>Mind Spur</h3><p>2 lines with resistance over the cap</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-ilvl-cap"/></svg>Upgrade</span><button class="btn" type="button"><svg class="i"><use href="../icons/lucide/sprite.svg#i-trade"/></svg>Find better gear</button></div></div></div></article>
+
+ <article class="sw"><header><h2>Focus ring pulse</h2><p class="use">Use it for: keyboard users landing on an action. Tab to the button.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage sim-host pulse"><div class="gc" data-v="fine"><div class="gap"><b>2</b><span>tiers</span></div><div class="gb"><span class="lbl">Amulet</span><h3>Demon Pendant</h3><p>1 open affix slot</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-fine"/></svg>Fine</span><button class="btn" type="button">Find better gear</button></div></div></div></article>
+</section>
+
+<!-- ============ 3 SURFACES ============ -->
+<section class="grid" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+ <article class="sw"><header><h2>Layered depth</h2><p class="use">Use it for: sections, using sunken → surface → raised instead of borders.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="layer fade"><div class="inner"><span class="lbl">Gear</span><ul class="gl" style="margin-top:8px"><li class="gc" data-v="replace"><div class="gap"><b>8</b><span>tiers</span></div><div class="gb"><span class="lbl">Main Hand</span><h3>Skull Song</h3><p>1 line can only improve on a higher item-level base</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-warning"/></svg>Replace</span></div></li></ul></div></div></div></article>
+
+ <article class="sw"><header><h2>Gradient section title</h2><p class="use">Use it for: one page-level heading, never per card.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="fade"><h3 class="gtitle">Gear</h3><div class="rule"></div><div class="gc" data-v="upgrade"><div class="gap"><b>5</b><span>tiers</span></div><div class="gb"><span class="lbl">Ring 1</span><h3>Behemoth Band</h3><p>5 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-ilvl-cap"/></svg>Upgrade</span></div></div></div></div></article>
+
+ <article class="sw"><header><h2>Faint grain</h2><p class="use">Use it for: the hero or page backdrop, once per page.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage grain"><div class="gc fade" data-v="fine" style="background-color:transparent"><div class="gap"><b>2</b><span>tiers</span></div><div class="gb"><span class="lbl">Body Armour</span><h3>Mind Keep</h3><p>2 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-fine"/></svg>Fine</span></div></div></div></article>
+
+ <article class="sw"><header><h2>Top-edge highlight</h2><p class="use">Use it for: every card; the cheapest depth cue there is.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage tophl"><ul class="gl fade"><li class="gc" data-v="replace"><div class="gap"><b>7</b><span>tiers</span></div><div class="gb"><span class="lbl">Ring 2</span><h3>Viper Whorl</h3><p>1 line with resistance over the cap</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-warning"/></svg>Replace</span></div></li><li class="gc" data-v="upgrade"><div class="gap"><b>6</b><span>tiers</span></div><div class="gb"><span class="lbl">Boots</span><h3>Mind Spur</h3><p>6 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-ilvl-cap"/></svg>Upgrade</span></div></li></ul></div></article>
+
+ <article class="sw"><header><h2>Pointer spotlight</h2><p class="use">Use it for: desktop-only flourish on the worst card. Move the pointer.</p><span class="cost" data-c="js">Needs JS (CSS vars only)</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage spot"><div class="gc fade" data-v="replace"><div class="gap"><b>9</b><span>tiers</span></div><div class="gb"><span class="lbl">Helmet</span><h3>Woe Cowl</h3><p>9 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-warning"/></svg>Replace</span><button class="btn" type="button">Find better gear</button></div></div></div></article>
+</section>
+
+<!-- ============ 4 SIGNATURE ============ -->
+<section class="grid" role="tabpanel" id="p4" aria-labelledby="t4" hidden>
+ <article class="sw"><header><h2>Oversized gap numeral</h2><p class="use">Use it for: the one fact the page is about (worst gap).</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="big fade"><b>9</b><div><span class="lbl">tiers · Helmet</span><h3 style="margin:4px 0;font:600 22px/1.2 var(--font-heading)">Woe Cowl</h3><p style="margin:0;color:var(--ink-dim);font-size:14px">9 tiers below the top, across its lines</p></div></div></div></article>
+
+ <article class="sw"><header><h2>Verdict stamp</h2><p class="use">Use it for: the Replace verdict on the worst card only.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="gc" data-v="replace" style="padding-right:120px"><div class="gap"><b>9</b><span>tiers</span></div><div class="gb"><span class="lbl">Helmet</span><h3>Woe Cowl</h3><p>9 tiers below the top, across its lines</p></div><span class="stamp">REPLACE</span></div></div></article>
+
+ <article class="sw"><header><h2>Tier ladder that climbs</h2><p class="use">Use it for: the gear overview; climbs to the worst gap.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="ladder">
+   <div class="rung" style="--g:2;--i:0"><b>2</b><i></i><span>Body Armour</span></div>
+   <div class="rung" style="--g:2;--i:1"><b>2</b><i></i><span>Amulet</span></div>
+   <div class="rung" style="--g:5;--i:2"><b>5</b><i></i><span>Ring 1</span></div>
+   <div class="rung" style="--g:6;--i:3"><b>6</b><i></i><span>Boots</span></div>
+   <div class="rung" style="--g:7;--i:4"><b>7</b><i></i><span>Ring 2</span></div>
+   <div class="rung" style="--g:8;--i:5"><b>8</b><i></i><span>Main Hand</span></div>
+   <div class="rung" style="--g:9;--i:6"><b>9</b><i></i><span>Helmet</span></div>
+  </div></div></article>
+
+ <article class="sw"><header><h2>Corrupted warning</h2><p class="use">Use it for: items that cannot be crafted on.</p><span class="cost" data-c="css">CSS only</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="gc corr" data-v="replace"><div class="gap"><b>9</b><span>tiers</span></div><div class="gb"><span class="lbl">Helmet · Corrupted</span><h3>Woe Cowl</h3><p>1 line with resistance over the cap</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-corrupted"/></svg>Replace</span></div><p class="warn"><svg class="i" aria-hidden="true"><use href="../icons/lucide/sprite.svg#i-corrupted"/></svg>Corrupted — it can only be replaced, not crafted on</p></div></div></article>
+
+ <article class="sw"><header><h2>Skeleton loading</h2><p class="use">Use it for: the gap while poe.ninja import runs.</p><span class="cost" data-c="hyd">Needs hydration care</span><button class="rp" type="button">Replay</button></header>
+  <div class="stage"><div class="gl loaded"><div class="gc" data-v="upgrade"><div class="gap"><b>6</b><span>tiers</span></div><div class="gb"><span class="lbl">Boots</span><h3>Mind Spur</h3><p>6 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-ilvl-cap"/></svg>Upgrade</span></div></div><div class="gc" data-v="upgrade"><div class="gap"><b>5</b><span>tiers</span></div><div class="gb"><span class="lbl">Ring 1</span><h3>Behemoth Band</h3><p>5 tiers below the top, across its lines</p></div><div class="act"><span class="st"><svg class="i"><use href="../icons/lucide/sprite.svg#i-ilvl-cap"/></svg>Upgrade</span></div></div></div>
+   <div class="skel" role="status" aria-label="Loading gear"><div class="sk"><span class="sh"></span></div><div class="sk"><span class="sh"></span></div></div></div></article>
+</section>
+
+<aside class="rec"><span class="lbl">Recommendation</span>
+<p id="rec">Port five: <b>top-edge highlight</b>, <b>bar fill</b>, <b>edge sweep on the worst gap</b>, <b>lift + hairline highlight</b> and <b>oversized gap numeral</b>, because together they give one signature moment (the worst gap) plus quiet depth and all five are CSS only. Each ports as an appended rule in <code>site/lab/lab.css</code>-style sheet keyed to existing hooks (<code>#gear [data-slot]</code>, <code>.card</code>, the gap meter span) with no markup edits, so hydration cannot drop them; skip count-up and skeleton until the site has a build step.</p></aside>
+</div>
+<script>
+(function () {
+  var root = document.documentElement, tabs = [].slice.call(document.querySelectorAll('[role=tab]'));
+  document.querySelector('.ctl').addEventListener('change', function (e) { root.setAttribute('data-' + e.target.name, e.target.value); });
+  function play(st) {
+    st.classList.remove('run', 'sim'); void st.offsetWidth; st.classList.add('run');
+    if (st.classList.contains('sim-host')) st.classList.add('sim');
+    st.querySelectorAll('[data-count]').forEach(function (b) {
+      var n = +b.dataset.count, t0 = 0, dur = parseFloat(getComputedStyle(root).getPropertyValue('--d')) * 5;
+      if (root.dataset.motion === 'reduce' || matchMedia('(prefers-reduced-motion: reduce)').matches) { b.textContent = n; return; }
+      (function step(t) { t0 = t0 || t; var p = Math.min(1, (t - t0) / dur); b.textContent = Math.round(n * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); })(performance.now());
+    });
+  }
+  function show(tab) {
+    tabs.forEach(function (t) { var on = t === tab; t.setAttribute('aria-selected', on); t.tabIndex = on ? 0 : -1; document.getElementById(t.getAttribute('aria-controls')).hidden = !on; });
+    document.querySelectorAll('#' + tab.getAttribute('aria-controls') + ' .stage').forEach(play);
+  }
+  tabs.forEach(function (t, i) {
+    t.onclick = function () { show(t); };
+    t.onkeydown = function (e) { var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (d) { var n = tabs[(i + d + tabs.length) % tabs.length]; n.focus(); show(n); } };
+  });
+  document.querySelectorAll('.rp').forEach(function (b) { b.onclick = function () { play(b.closest('.sw').querySelector('.stage')); }; });
+  document.querySelectorAll('.spot').forEach(function (s) {
+    s.addEventListener('pointermove', function (e) { var r = s.getBoundingClientRect(); s.style.setProperty('--x', (e.clientX - r.left) + 'px'); s.style.setProperty('--y', (e.clientY - r.top) + 'px'); });
+  });
+  show(tabs[0]);
+})();
+</script>
+</body>
+</html>
