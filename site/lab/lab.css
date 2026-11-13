@@ -679,8 +679,6 @@ body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="boots"]{order:10}
 body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="helmet"]:not([data-slot="helmet"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="amulet"]:not([data-slot="amulet"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="body"]:not([data-slot="body"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="main-hand"]:not([data-slot="main-hand"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="off-hand"]:not([data-slot="off-hand"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="gloves"]:not([data-slot="gloves"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="ring-1"]:not([data-slot="ring-1"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="ring-2"]:not([data-slot="ring-2"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="belt"]:not([data-slot="belt"]~li)::before,body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="boots"]:not([data-slot="boots"]~li)::before{content:attr(data-slot);display:block;margin-bottom:4px;font:600 10px/1.4 var(--font-mono,var(--lab-mono));letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
 
 /* locate: highlight the area a changed option affects */
-[data-lab-flash]{outline:2px solid var(--lab-gold)!important;outline-offset:6px;box-shadow:0 0 0 10px rgba(212,175,90,.14),0 0 44px rgba(212,175,90,.35)!important;filter:brightness(1.12);scroll-margin-top:80px}
-@media(prefers-reduced-motion:no-preference){[data-lab-flash]{animation:lab-flash 2.6s ease-out forwards}}
 @keyframes lab-flash{0%{outline-color:#fff;filter:brightness(1.5)}15%{outline-color:var(--lab-gold);filter:brightness(1.2)}75%{outline-color:var(--lab-gold);filter:brightness(1.12)}100%{outline-color:transparent;filter:none;box-shadow:0 0 0 10px transparent,0 0 44px transparent}}
 
 /* spotlight: dims everything but the changed area */
@@ -706,3 +704,28 @@ body[data-gdelta="grouped"] [data-lab=gdelta]>li[data-slot="helmet"]:not([data-s
 @media(prefers-reduced-motion:reduce){.lab-tile,.lab-tile iframe{transition:none}.lab-tile:hover{transform:none}}
 @media(max-width:600px){.lab-grid{grid-template-columns:minmax(0,1fr)}.lab-tile iframe{height:260px}}
 #lab-gallery{scroll-padding-top:76px}.lab-ghead{z-index:3!important}
+
+/* Big moves: whole-page themes */
+body[data-mood]{background:var(--page);color:var(--ink)}
+body[data-mood="paper"]{color-scheme:light;--page:#efe6d2;--surface:#f7f0e0;--raised:#fffaf0;--sunken:#e4d9c0;--overlay:#fff;--line:#c9b994;--line-strong:#a8956a;--ink:#1d160b;--ink-dim:#4a3f2c;--ink-mute:#6b5d43;--accent:#8a5a00;--accent-dim:#6b4500;--accent-soft:#8a5a0018;--accent-line:#8a5a0066;--on-accent:#fff8e6;--gold-top:#a87010;--gold-mid:#8a5a00;--gold-bot:#5e3d00;--gold-text:linear-gradient(180deg,#a87010,#6b4500);--halo:none;--well:#e4d9c0;--data-fill:var(--surface);--metal-hi:#d8c9a4;--metal-lo:#bfae84;--plate-line:#a8956a}
+body[data-mood="crimson"]{--page:#0c0505;--surface:#160909;--raised:#200d0d;--sunken:#0a0404;--line:#3d1a1a;--line-strong:#5a2424;--accent:#e5484d;--accent-dim:#8c2226;--accent-soft:#e5484d1f;--accent-line:#e5484d66;--on-accent:#fff;--gold-top:#ff6b6f;--gold-mid:#e5484d;--gold-bot:#a8262b;--gold-text:linear-gradient(180deg,#ff9a9d,#e5484d 55%,#a8262b);--plate-line:#5a2424}
+body[data-mood="emerald"]{--page:#03100d;--surface:#071a15;--raised:#0b241d;--sunken:#020b09;--line:#16392f;--line-strong:#1f5444;--accent:#2fd39a;--accent-dim:#1a7a5a;--accent-soft:#2fd39a1f;--accent-line:#2fd39a66;--on-accent:#02140e;--gold-top:#6fe8bd;--gold-mid:#2fd39a;--gold-bot:#18986c;--gold-text:linear-gradient(180deg,#9ff3d3,#2fd39a 55%,#18986c);--plate-line:#1f5444}
+body[data-mood="arctic"]{--page:#0a0f16;--surface:#101823;--raised:#16212f;--sunken:#070b10;--line:#24344a;--line-strong:#33496a;--ink:#eaf2fb;--ink-dim:#a9b8cb;--ink-mute:#8193a9;--accent:#5ec8ff;--accent-dim:#2a74a0;--accent-soft:#5ec8ff1f;--accent-line:#5ec8ff66;--on-accent:#04121c;--gold-top:#9adcff;--gold-mid:#5ec8ff;--gold-bot:#2b8fc7;--gold-text:linear-gradient(180deg,#c4ebff,#5ec8ff 55%,#2b8fc7);--plate-line:#33496a}
+body[data-mood="violet"]{--page:#0b0814;--surface:#130e22;--raised:#1b1430;--sunken:#08060f;--line:#2e2448;--line-strong:#433466;--accent:#b18cff;--accent-dim:#6a4bb0;--accent-soft:#b18cff1f;--accent-line:#b18cff66;--on-accent:#140a2a;--gold-top:#cdb3ff;--gold-mid:#b18cff;--gold-bot:#7d58d6;--gold-text:linear-gradient(180deg,#e2d4ff,#b18cff 55%,#7d58d6);--plate-line:#433466}
+body[data-mood="contrast"]{--page:#000;--surface:#000;--raised:#0a0a0a;--sunken:#000;--line:#fff;--line-strong:#fff;--ink:#fff;--ink-dim:#fff;--ink-mute:#e6e6e6;--accent:#ffe600;--accent-dim:#ffe600;--accent-soft:#ffe60026;--accent-line:#ffe600;--on-accent:#000;--gold-top:#ffe600;--gold-mid:#ffe600;--gold-bot:#ffe600;--gold-text:linear-gradient(#ffe600,#ffe600);--card-edge:#fff;--plate-line:#fff}
+body[data-mood="mono"]{filter:grayscale(1)}
+body[data-mood="mono"] #lab-panel,body[data-mood="mono"] #lab-toggle{filter:none}
+/* Split view */
+#lab-split{position:fixed;inset:0;z-index:200;background:#060608;display:flex;flex-direction:column}
+#lab-split[hidden]{display:none}
+.lab-shead{display:grid;grid-template-columns:1fr auto 1fr auto;align-items:center;gap:12px;padding:8px 12px;border-bottom:1px solid #2a2a30;color:#f3eee4;font:600 13px/1.2 system-ui,sans-serif}
+.lab-shead span:last-of-type{text-align:right;color:#e3b341}
+.lab-shead strong{color:#b1aca3;font-weight:500}
+.lab-shead .lab-x{min-width:44px;min-height:44px}
+.lab-spanes{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:2px;background:#2a2a30;min-height:0}
+.lab-spanes iframe{width:100%;height:100%;border:0;background:#08080a}
+@media(max-width:767px){.lab-spanes{grid-template-columns:1fr;grid-template-rows:1fr 1fr}}
+body[data-mood="paper"] :is(.astrolabe,.sky-scrim){display:none}
+body[data-mood="paper"] :is(.site-nav,.page-title,.card,.site-footer,footer){background-color:color-mix(in srgb,var(--surface) 85%,transparent)}
+body[data-mood="paper"] .page-title,body[data-mood="paper"] .site-nav{background-color:transparent}
+body[data-mood="paper"]{--danger:#b3261e;--good:#0b6b4a;--warn:#8a5300}
