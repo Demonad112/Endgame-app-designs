@@ -1,0 +1,25 @@
+/* Gear section polish, ported from mockups/wow. CSS only, keyed to existing hooks; no markup changes.
+   Motion animates opacity/transform only and runs only under prefers-reduced-motion:no-preference. */
+:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot{position:relative;overflow:hidden;box-shadow:inset 0 1px 0 #ffffff12}
+/* 1 top-edge highlight: hairline light on every card */
+:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot{border-top-color:var(--line-strong)}
+/* 2 bar fill: gap meter under the numeral, length = tiers below top (scale 9) */
+:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-gap::after{content:"";display:block;width:100%;height:4px;margin-top:4px;background:var(--band);transform:scaleX(min(1,calc(var(--gap)/9)));transform-origin:left;box-shadow:0 0 0 1px var(--line)}
+/* 3 oversized numeral on the worst gap (list is sorted worst first) */
+:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot:first-child .gl-gap b{font:600 96px/.85 var(--font-heading);font-variant-numeric:lining-nums}
+/* 4 edge sweep on the worst gap: thicker band edge + one light pass */
+:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot:first-child{border-left-width:6px}
+:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot:first-child::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);opacity:0}
+/* 5 lift + hairline highlight on hover / keyboard focus */
+:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--accent);opacity:0;pointer-events:none}
+:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot:is(:hover,:focus-within){border-color:var(--line-strong);border-left-color:var(--band);transform:translateY(-3px)}
+:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot:is(:hover,:focus-within)::before{opacity:.8}
+@media(max-width:759px){:is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot:first-child .gl-gap b{font-size:64px}}
+@media(prefers-reduced-motion:no-preference){
+ :is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot{transition:transform .2s cubic-bezier(.2,.7,.2,1)}
+ :is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot::before{transition:opacity .2s}
+ :is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-gap::after{animation:gw-fill .8s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--gap)*20ms)}
+ :is(body:not([data-gear]),body[data-gear=ladder]) #gear .gl-slot:first-child::after{animation:gw-sweep 1.2s .3s cubic-bezier(.2,.7,.2,1) both}
+}
+@keyframes gw-fill{from{transform:scaleX(0)}}
+@keyframes gw-sweep{0%{opacity:1;transform:translateX(-100%)}80%{opacity:1}100%{opacity:0;transform:translateX(100%)}}
