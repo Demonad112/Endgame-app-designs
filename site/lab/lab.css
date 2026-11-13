@@ -244,7 +244,7 @@ body[data-sev="glyph"] .chip[class*="text-warn"]::before{content:"\25B2"}
 body[data-sev="glyph"] .chip[class*="text-danger"]::before{content:"\25C6"}
 body[data-sev="rowtint"] li[data-status]{padding:6px 10px;margin:0 -10px;background:color-mix(in srgb,var(--lab-sev-unknown) 10%,transparent)}
 body[data-sev="underscore"] .chip[class*="text-"]{background:transparent;border-width:0 0 2px;padding-inline:1px}
-body[data-sev="filled"] .chip[class*="text-"]{border-color:transparent;color:#0b0b0d;font-weight:700}
+body[data-sev="filled"] .chip:is([class*="text-good"],[class*="text-warn"],[class*="text-danger"]){border-color:transparent;color:#0b0b0d;font-weight:700}
 body[data-sev="filled"] .chip[class*="text-good"]{background:var(--lab-sev-pass)}
 body[data-sev="filled"] .chip[class*="text-warn"]{background:var(--lab-sev-warn)}
 body[data-sev="filled"] .chip[class*="text-danger"]{background:var(--lab-sev-fail)}
@@ -272,7 +272,7 @@ body[data-dmg="patterned"] .efill[data-dmg=physical]{background:radial-gradient(
 body[data-dmg="patterned"] .efill[data-dmg=chaos]{background:repeating-linear-gradient(45deg,#fff6 0 1px,transparent 1px 6px),repeating-linear-gradient(-45deg,#fff6 0 1px,transparent 1px 6px),var(--dmg-chaos)}
 body[data-dmg="swatch"] .diamond{transform:none;width:12px;height:12px}
 body[data-dmg="legend"] .serif-label{border:1px solid var(--line-strong);border-left:5px solid var(--ink-mute);padding:1px 8px}
-body[data-dmg="tint"] li:has([data-dmg=fire]) .serif-label{color:var(--dmg-fire)}body[data-dmg="tint"] li:has([data-dmg=cold]) .serif-label{color:var(--dmg-cold)}body[data-dmg="tint"] li:has([data-dmg=lightning]) .serif-label{color:var(--dmg-lightning)}body[data-dmg="tint"] li:has([data-dmg=physical]) .serif-label{color:var(--dmg-physical)}body[data-dmg="tint"] li:has([data-dmg=chaos]) .serif-label{color:#b172e0}
+body[data-dmg="tint"] li:has([data-dmg=fire]) .serif-label{color:#e0866e}body[data-dmg="tint"] li:has([data-dmg=cold]) .serif-label{color:var(--dmg-cold)}body[data-dmg="tint"] li:has([data-dmg=lightning]) .serif-label{color:var(--dmg-lightning)}body[data-dmg="tint"] li:has([data-dmg=physical]) .serif-label{color:var(--dmg-physical)}body[data-dmg="tint"] li:has([data-dmg=chaos]) .serif-label{color:#b172e0}
 body[data-dmg="legend"] li:has([data-dmg=fire]) .serif-label{border-left-color:var(--dmg-fire)}body[data-dmg="legend"] li:has([data-dmg=cold]) .serif-label{border-left-color:var(--dmg-cold)}body[data-dmg="legend"] li:has([data-dmg=lightning]) .serif-label{border-left-color:var(--dmg-lightning)}body[data-dmg="legend"] li:has([data-dmg=physical]) .serif-label{border-left-color:var(--dmg-physical)}body[data-dmg="legend"] li:has([data-dmg=chaos]) .serif-label{border-left-color:var(--dmg-chaos)}
 
 /* =================================================================
