@@ -4,7 +4,7 @@
   'use strict';
   var Q = new URLSearchParams(location.search), MODE = Q.get('lab');
   if (MODE === '0') return;
-  var SOLO = MODE === 'solo', AUDIT = MODE === 'audit';
+  var SOLO = MODE === 'solo', VIEW = MODE === 'view', AUDIT = MODE === 'audit';
   document.documentElement.setAttribute('data-lab-on', '');
   var KEY = 'lab:v1', PKEY = 'lab:presets';
 
@@ -14,7 +14,9 @@
     return { key: key, label: label, theme: theme, solo: solo, options: opts };
   }
   var S1 = 'Surfaces & structure', S2 = 'Verdict & numbers', S3 = 'Reading flow', S4 = 'Type, colour & finish';
+  var S0 = 'Big moves';
   var GROUPS = [
+    G('mood', 'Whole-page theme', S0, '[data-showcase]', 'paper|Paper|Light parchment, dark ink;crimson|Crimson|Blood-red accent, warm black;emerald|Emerald|Green accent, deep teal;arctic|Arctic|Ice-blue accent, slate;violet|Violet|Purple accent, midnight;contrast|High contrast|Pure black, white, yellow;mono|Monochrome|Greyscale, no colour'),
     G('card', 'Card elevation', S1, '[data-top-fixes]', 'flat|Flat|No shadow, hairline only;raised|Raised|Soft lifted shadow;stepped|Stepped|Hard offset shadow;stack|Stack|Two ghost cards behind;pressed|Pressed|Inset, pushed-in panel;underglow|Underglow|Ambient gold glow beneath;toplit|Top-lit|Highlight on top edge, shade below;engraved|Engraved|Double engraved inner border;bare|Bare|Content on the page, no panel;cutout|Cutout|Gold hairline set inside the edge;shelf|Shelf|Thick bottom ledge'),
     G('fill', 'Panel fill', S1, '[data-top-fixes]', 'clear|Clear glass|Very light tint;frost|Frosted|Blurred frosted tint;ink|Solid ink|Opaque near-black;vgrad|Vertical gradient|Light to dark top-down;sheen|Diagonal sheen|Soft diagonal highlight;grain|Noise grain|Fine film grain;parchment|Dark parchment|Warm paper texture;duotone|Gold wash|Duotone gold wash;scanline|Scanline|1px horizontal lines;smoke|Smoke|Off-centre radial haze'),
     G('frame', 'Borders & frames', S1, '[data-top-fixes]', 'double|Double rule|Second rule outside;brackets|Brackets|Gold corner brackets;notch|Notched|Cut corners, straight edges;barL|Left bar|Left accent bar;barT|Top bar|Top accent bar;dashed|Dashed|Technical dashed edge;spaced|Spaced|No border, spacing only;rivets|Rivets|Square corner studs;tickframe|Ruler ticks|Ruler ticks on the top edge'),
@@ -49,6 +51,9 @@
   function valid(k, v) { var g = BY[k]; return g && g.options.some(function (o) { return o.id === v; }); }
 
   var PRESETS = {
+    'Bold: Paper': { mood: 'paper', card: 'raised', frame: 'double', head: 'strip', grade: 'slab', rows: 'zebra', density: 'spacious', htype: 'underline', findings: 'split', gear: 'bars' },
+    'Bold: Crimson': { mood: 'crimson', card: 'stepped', fill: 'ink', frame: 'brackets', head: 'tab', grade: 'slab', rows: 'valuefirst', nums: 'bigvalue', density: 'luxe', grid: '2col', htype: 'outlined', findings: 'bands', gear: 'slots' },
+    'Bold: Arctic': { mood: 'arctic', card: 'flat', frame: 'barL', head: 'marker', grade: 'segbar', rows: 'chips', density: 'compact', grid: '3col', htype: 'tracked', findings: 'columns', meter: 'heat', gear: 'tiers' },
     'Archive': { card: 'engraved', fill: 'parchment', frame: 'double', head: 'rule', divider: 'ornament', grade: 'seal', rows: 'leaders', nums: 'oldstyle', meter: 'underline', sev: 'glyph', accent: 'antique', bg: 'vignette', htype: 'smallcaps', chip: 'bracketed', gear: 'ladder', gdelta: 'delta' },
     'Ledger': { card: 'flat', fill: 'ink', frame: 'tickframe', head: 'overline', divider: 'ledger', grade: 'margin', rows: 'ruled', nums: 'boxed', meter: 'ruler', sev: 'margin', findings: 'bands', htype: 'tracked', chip: 'monocaps', bg: 'grid', gear: 'bars', gdelta: 'compact' },
     'Plate': { card: 'raised', fill: 'vgrad', frame: 'rivets', head: 'strip', divider: 'diamond', grade: 'slab', rows: 'tabbed', nums: 'keygold', meter: 'segments', sev: 'badge', hero: 'plate', accent: 'brass', htype: 'underline', gear: 'slots', gdelta: 'tags' },
@@ -215,12 +220,6 @@
     var top = Math.max(0, window.scrollY + r.top - Math.max(72, (visH - Math.min(r.height, visH - 120)) / 2));
     var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: top, behavior: calm ? 'auto' : 'smooth' });
-    if (flashEl) flashEl.removeAttribute('data-lab-flash');
-    clearTimeout(flashT); void el.offsetWidth;
-    el.setAttribute('data-lab-flash', ''); flashEl = el;
-    var op = g.options.filter(function (o) { return o.id === (state[key] || 'base'); })[0];
-    spot(el, g.label + ': ' + (op ? op.name : ''));
-    flashT = setTimeout(function () { el.removeAttribute('data-lab-flash'); if (flashEl === el) flashEl = null; spotOff(); }, 2600);
   }
   var spotEl, spotRaf = 0, spotTarget = null;
   function spotPlace() {
@@ -311,8 +310,9 @@
     ['pointerup', 'pointerleave', 'pointercancel', 'blur'].forEach(function (ev) { cmp.addEventListener(ev, back); });
     cmp.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); strip(); } });
     cmp.addEventListener('keyup', function (e) { if (e.key === ' ' || e.key === 'Enter') back(); });
-    var fb = btn('Follow: ' + (follow ? 'on' : 'off'), function () { follow = !follow; lsSet('lab:follow', follow ? '1' : '0'); fb.textContent = 'Follow: ' + (follow ? 'on' : 'off'); fb.setAttribute('aria-pressed', follow); }, 'Auto-jump to and highlight the area each change affects');
+    var fb = btn('Follow: ' + (follow ? 'on' : 'off'), function () { follow = !follow; lsSet('lab:follow', follow ? '1' : '0'); fb.textContent = 'Follow: ' + (follow ? 'on' : 'off'); fb.setAttribute('aria-pressed', follow); }, 'Auto-scroll to the area each change affects');
     fb.setAttribute('aria-pressed', follow);
+    btn('Split view', function () { openSplit(); }, 'Original and your version side by side, scrolling together');
     btn('Gallery', function () { openGallery(); }, 'Compare every option of one group');
     btn('Expand all', function () { document.querySelectorAll('main details').forEach(function (d) { d.open = true; }); });
     btn('Collapse all', function () { document.querySelectorAll('main details').forEach(function (d) { d.open = false; }); });
@@ -343,14 +343,14 @@
       selects[g.key] = sel;
       var rb = h('button', { type: 'button', class: 'lab-rs', 'aria-label': 'Reset ' + g.label, title: 'Reset ' + g.label, text: '↺' });
       rb.onclick = function () { set(g.key, 'base'); };
-      var lb = h('button', { type: 'button', class: 'lab-go', 'aria-label': 'Show where ' + g.label + ' applies', title: 'Jump to and highlight the area this changes', text: '⌖' });
+      var lb = h('button', { type: 'button', class: 'lab-go', 'aria-label': 'Show where ' + g.label + ' applies', title: 'Scroll to the area this changes', text: '⌖' });
       lb.onclick = function () { locate(g.key, true); };
       themes[g.theme].appendChild(h('div', { class: 'lab-row' }, [h('label', { for: 'lab-s-' + g.key }, [h('span', { text: g.label }), sel]), lb, rb]));
     });
     document.body.appendChild(toggle); document.body.appendChild(panel);
     toggle.onclick = function () { panel.hidden ? open() : close(); };
     trap(panel);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (gal && !gal.hidden) closeGal(); else if (!panel.hidden) close(); } });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (spl && !spl.hidden) spl.querySelector('.lab-x').click(); else if (gal && !gal.hidden) closeGal(); else if (!panel.hidden) close(); } });
   }
   function trap(el) {
     el.addEventListener('keydown', function (e) {
@@ -365,6 +365,23 @@
   function open() { opener = document.activeElement; panel.hidden = false; toggle.setAttribute('aria-expanded', 'true'); searchEl.focus(); }
   function close() { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); var t = opener && document.contains(opener) && opener !== document.body ? opener : toggle; t.focus(); }
   function closeGal() { gal.hidden = true; var t = galOpener && document.contains(galOpener) ? galOpener : toggle; t.focus(); }
+
+
+  /* ---------- split view ---------- */
+  var spl;
+  function openSplit() {
+    if (!spl) { spl = h('div', { id: 'lab-split', role: 'dialog', 'aria-label': 'Split view' }); document.body.appendChild(spl); trap(spl); }
+    spl.hidden = false; spl.textContent = ''; galOpener = document.activeElement;
+    var base = location.pathname, qs = new URLSearchParams(state).toString();
+    var L = h('iframe', { title: 'Original', src: base + '?lab=0' }), R = h('iframe', { title: 'Your version', src: base + '?lab=view#' + qs });
+    var x = h('button', { type: 'button', class: 'lab-x', 'aria-label': 'Close split view', text: '×' });
+    x.onclick = function () { spl.hidden = true; var t = galOpener && document.contains(galOpener) ? galOpener : toggle; t.focus(); };
+    spl.appendChild(h('div', { class: 'lab-shead' }, [h('span', { text: 'Original' }), h('strong', { text: Object.keys(state).length + ' changes' }), h('span', { text: 'Your version' }), x]));
+    spl.appendChild(h('div', { class: 'lab-spanes' }, [L, R]));
+    var lock = 0;
+    function link(a, b) { a.addEventListener('load', function () { a.contentWindow.addEventListener('scroll', function () { if (lock && lock !== a) return; lock = a; var d = a.contentWindow.document.documentElement, e = b.contentWindow && b.contentWindow.document.documentElement; if (e) b.contentWindow.scrollTo(0, (d.scrollTop / Math.max(1, d.scrollHeight - d.clientHeight)) * (e.scrollHeight - e.clientHeight)); clearTimeout(link.t); link.t = setTimeout(function () { lock = 0; }, 120); }); }); }
+    link(L, R); link(R, L); x.focus();
+  }
 
   /* ---------- gallery ---------- */
   var gal;
@@ -400,6 +417,7 @@
   /* ---------- boot ---------- */
   state = load();
   if (SOLO) { apply(); solo(); return; }
+  if (VIEW) { apply(); return; }
   apply();
   build(); sync();
   if (AUDIT) audit();
