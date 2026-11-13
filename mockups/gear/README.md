@@ -6,4 +6,4 @@ Open `index.html` (fonts load from `../../site/_next/static/media/`). Tabs switc
 - **Action board**: Fix now / Fix soon / Fine lanes, one key reason per slot. Key line order: corrupted, item-level cap, resist over cap, open affix, tiers.
 - **Gear diff**: the skill's T3→T1 style changes per slot; only slots with a listed change appear.
 **Recommended: Priority ladder.** It answers the section's one question (worst gap, fix order) with the least new UI, and it degrades to the live page's row structure on mobile.
-**Porting:** keep the page's existing `li[data-slot][data-band][data-gap][data-flags]` markup and `--gap` var; add `--rank` and the `.enc` block (number/bar/pips) in the gear renderer, move the CSS into the site stylesheet using its tokens, and leave the lab hooks (`data-lab`, `gdelta`) untouched.
+**Ported:** the Priority ladder is now the live Gear section (`site/character/index.html` #gear plus `site/character/gear-ladder.css`). Cards are sorted worst-gap-first in the markup; the lab hooks (`data-slot`, `data-band`, `data-gap`, `data-flags`, `--gap`, `data-gear-targets`) are unchanged.
