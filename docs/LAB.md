@@ -85,3 +85,7 @@ Changing any dropdown scrolls to the area that group affects (its `solo` selecto
 ## Combination check
 
 A sweep of every preset and every single option at 360 and 1440px (overflow, JS errors, `?lab=audit` count against the original's 8) found two regressions, both fixed: `sev=filled` dark text was also applied to neutral and accent chips (now only good/warn/danger chips), and `dmg=tint` fire was 4.3:1 (now `#e0866e`). Vault (uses `sev=filled`) is back to 8. Option pairs are not swept yet.
+
+## Spotlight and gallery
+
+Locate now also draws `#lab-spot`: a fixed gold frame around the target with the rest of the page dimmed and a tag naming the group and option ("Gear layout: Gap bars"). It tracks the element while it scrolls and fades after ~2.6s. The gallery has previous/next group buttons, an option count, an "Applied" badge on the current tile, loading states, hover lift and a stronger gold frame on the applied tile; tiles are single column on phones.

@@ -218,8 +218,23 @@
     if (flashEl) flashEl.removeAttribute('data-lab-flash');
     clearTimeout(flashT); void el.offsetWidth;
     el.setAttribute('data-lab-flash', ''); flashEl = el;
-    flashT = setTimeout(function () { el.removeAttribute('data-lab-flash'); if (flashEl === el) flashEl = null; }, 2600);
+    var op = g.options.filter(function (o) { return o.id === (state[key] || 'base'); })[0];
+    spot(el, g.label + ': ' + (op ? op.name : ''));
+    flashT = setTimeout(function () { el.removeAttribute('data-lab-flash'); if (flashEl === el) flashEl = null; spotOff(); }, 2600);
   }
+  var spotEl, spotRaf = 0, spotTarget = null;
+  function spotPlace() {
+    if (!spotEl || !spotTarget) return;
+    var r = spotTarget.getBoundingClientRect(), pad = 8;
+    spotEl.style.cssText = 'left:' + (r.left - pad) + 'px;top:' + (r.top - pad) + 'px;width:' + (r.width + pad * 2) + 'px;height:' + (r.height + pad * 2) + 'px';
+    spotRaf = requestAnimationFrame(spotPlace);
+  }
+  function spot(el, text) {
+    if (!spotEl) { spotEl = h('div', { id: 'lab-spot', 'aria-hidden': 'true', 'data-lab-ui': '' }, [h('span', { class: 'lab-spot-tag' })]); document.body.appendChild(spotEl); }
+    spotEl.firstChild.textContent = text; spotTarget = el; spotEl.removeAttribute('data-off'); spotEl.setAttribute('data-on', '');
+    cancelAnimationFrame(spotRaf); spotPlace();
+  }
+  function spotOff() { if (!spotEl) return; spotEl.setAttribute('data-off', ''); spotEl.removeAttribute('data-on'); setTimeout(function () { if (spotEl.hasAttribute('data-off')) { cancelAnimationFrame(spotRaf); spotTarget = null; } }, 450); }
 
   /* ---------- solo (gallery tiles) ---------- */
   function solo() {
@@ -362,20 +377,23 @@
     var gs = h('select', { 'aria-label': 'Group' });
     GROUPS.forEach(function (g) { gs.appendChild(h('option', { value: g.key, text: g.label })); });
     var cur = Object.keys(state)[0] || 'card'; gs.value = cur;
+    var count = h('span', { class: 'lab-gcount' });
+    function step(d) { var i = GROUPS.findIndex(function (g) { return g.key === gs.value; }); gs.value = GROUPS[(i + d + GROUPS.length) % GROUPS.length].key; draw(); }
     var grid = h('div', { class: 'lab-grid' });
     function draw() {
-      var g = BY[gs.value]; grid.textContent = '';
+      var g = BY[gs.value]; grid.textContent = ''; count.textContent = g.options.length + ' options · ' + g.theme;
       g.options.forEach(function (o) {
         var qs = new URLSearchParams(state); qs.set(g.key, o.id); if (o.id === 'base') qs.delete(g.key);
         var f = h('iframe', { loading: 'lazy', title: g.label + ': ' + o.name, tabindex: '-1', src: location.pathname + '?lab=solo&t=' + encodeURIComponent(g.solo) + '#' + qs.toString() });
         var on = (state[g.key] || 'base') === o.id;
-        var b = h('button', { type: 'button', class: 'lab-tile', title: o.title, 'aria-pressed': on ? 'true' : 'false' }, [f, h('span', { class: 'lab-tn', text: o.name }), h('span', { class: 'lab-td', text: o.title || '' })]);
+        var b = h('button', { type: 'button', class: 'lab-tile', title: o.title, 'aria-pressed': on ? 'true' : 'false' }, [f, h('span', { class: 'lab-tn', text: o.name }), h('span', { class: 'lab-td', text: o.title || '' })].concat(on ? [h('span', { class: 'lab-on', text: 'Applied' })] : []));
+        f.addEventListener('load', function () { b.setAttribute('data-ready', ''); });
         b.onclick = function () { set(g.key, o.id, true); closeGal(); locate(g.key); };
         grid.appendChild(b);
       });
     }
     gs.onchange = draw;
-    gal.appendChild(h('div', { class: 'lab-ghead' }, [h('strong', { text: 'Gallery' }), gs, h('button', { type: 'button', text: 'Close', onclick: closeGal })]));
+    gal.appendChild(h('div', { class: 'lab-ghead' }, [h('strong', { text: 'Gallery' }), h('button', { type: 'button', 'aria-label': 'Previous group', title: 'Previous group', text: '‹', onclick: function () { step(-1); } }), gs, h('button', { type: 'button', 'aria-label': 'Next group', title: 'Next group', text: '›', onclick: function () { step(1); } }), count, h('button', { type: 'button', class: 'lab-gclose', text: 'Close (Esc)', onclick: closeGal })]));
     gal.appendChild(grid); draw(); gs.focus();
   }
 
