@@ -60,6 +60,7 @@
     'Field Report': { card: 'shelf', fill: 'grain', frame: 'barT', head: 'rule', divider: 'ledger', grade: 'badge', rows: 'zebra', nums: 'lining', meter: 'heat', sev: 'rowtint', recs: 'stepper', findings: 'split', accent: 'brass', bg: 'hatch', gear: 'tiers', gdelta: 'tags' },
     'Vault': { card: 'underglow', fill: 'duotone', frame: 'brackets', head: 'strip', divider: 'diamond', grade: 'stencil', rows: 'chips', nums: 'keygold', meter: 'spark', sev: 'filled', dmg: 'patterned', bg: 'fog', accent: 'rose', htype: 'outlined', motion: 'lift', states: 'glow', gear: 'slots', gdelta: 'tags' },
     'Telegraph': { card: 'stepped', fill: 'ink', frame: 'double', head: 'side', divider: 'rule', grade: 'segbar', rows: 'leaders', nums: 'condensed', meter: 'delta', sev: 'traffic', recs: 'receipt', hero: 'banner', htype: 'tracked', chip: 'monocaps', footer: 'plate', gear: 'compact', gdelta: 'delta' },
+    'Best': { card: 'toplit', fill: 'smoke', frame: 'tickframe', head: 'overline', divider: 'fade', density: 'comfy', grade: 'band', rows: 'ruled', nums: 'keygold', meter: 'segments', sev: 'badge', dmg: 'legend', findings: 'timeline', recs: 'stepper', gear: 'tiers', gdelta: 'tags', nav: 'tabs', hero: 'plate', htype: 'underline', scale: 'standard', accent: 'champagne', bg: 'vignette', states: 'underline', chip: 'outline', footer: 'plate' },
     'Codex': { card: 'stack', fill: 'parchment', frame: 'barL', head: 'marker', divider: 'chapter', grade: 'ladder', rows: 'ruled', nums: 'oldstyle', meter: 'segments', sev: 'glyph', findings: 'index', hero: 'crumb', htype: 'numbered', accent: 'antique', bg: 'vignette', scale: 'editorial', gear: 'ladder', gdelta: 'grouped' }
   };
   var PRESET_META = {
@@ -74,6 +75,7 @@
     'Field Report': 'Shelf cards, grain fill, zebra rows, stepper recommendations.',
     'Vault': 'Underglow cards, gold wash, brackets, patterned damage colours.',
     'Telegraph': 'Hard stepped shadows, side labels, receipt recommendations.',
+    'Best': 'Recommended all-round mix: top-lit cards, tick frames, tiered gear, timeline findings, sticky tabs.',
     'Codex': 'Stacked parchment cards, chapter numerals, indexed findings.'
   };
   Object.keys(PRESETS).forEach(function (n) { Object.freeze(PRESETS[n]); }); Object.freeze(PRESETS);

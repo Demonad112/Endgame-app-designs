@@ -22,6 +22,7 @@ Defined in `PRESETS`; one-line titles in `PRESET_META` (used as the `<option tit
 - **Field Report**: Shelf cards, grain fill, zebra rows, stepper recommendations.
 - **Vault**: Underglow cards, gold wash, brackets, patterned damage colours.
 - **Telegraph**: Hard stepped shadows, side labels, receipt recommendations.
+- **Best**: Recommended all-round mix: top-lit cards, tick frames, tiered gear, timeline findings, sticky tabs. Contrast audit matches the original page (8 pre-existing flags, none added); no horizontal overflow at 390 or 1440.
 - **Codex**: Stacked parchment cards, chapter numerals, indexed findings.
 
 ## Groups
