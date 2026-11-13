@@ -76,3 +76,7 @@ Attributes only, no content edits (added to `site/character/index.html`; `?lab=0
 - `bars`/`tiers` are single-column flex lists (BAD pairs with `grid:2col|3col`; `bars` also with `card:stack`). `bars` hides the flag list items and draws the bar on `ul::before`, the gap number via `counter-reset:g var(--gap)` on `ul::after`. `tiers` headings are on `p.label-metric::before` of the first card per band (no `.card` pseudo), so they sit inside that card, not above the group.
 - `gdelta=grouped` is CSS only: `order` by slot, heading from `data-slot` on the first row of each slot.
 - `solo()` now opens ancestor `<details>` so gallery tiles whose target is inside a closed disclosure are not blank.
+
+## Locate / follow
+
+Changing any dropdown scrolls to the area that group affects (its `solo` selector in `GROUPS`) and flashes a gold outline + glow for ~2.6s (`[data-lab-flash]`). Each row has a `⌖` button to jump and highlight without changing anything. The **Follow** button turns auto-jump off/on (`localStorage["lab:follow"]`); `⌖` always works. Closed `<details>` ancestors are opened, hidden tab panels are selected, `prefers-reduced-motion` gets an instant scroll and no animation. On phones the sheet is capped at 50vh so the target stays visible above it.
