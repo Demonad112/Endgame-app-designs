@@ -14,6 +14,7 @@ EB Garamond for headings, Inter for body, Geist Mono for labels/numbers (`--font
 ## Icons: inline Lucide SVGs, copied one at a time
 - Use Lucide (ISC licence): 24x24, 2px stroke, `currentColor`, square-ish and plain, which matches the site's existing stroke icons. Copy only the icons needed as inline `<svg aria-hidden="true">` or one `<symbol>` sprite per page. No npm package, no icon font, no CDN: the site is static with no build step.
 - Skip Font Awesome Free (filled style clashes, icon font/JS payload, CC BY attribution requirement for the icons) and Material Symbols (a variable font of thousands of glyphs for a handful of icons). Revisit only if the site gets a build step with tree-shaking.
+- Ready-made packs of the 16 icons the site needs (Lucide, Phosphor Regular, Tabler Outline) are in `mockups/icons/`, one `sprite.svg` each with a preview page. Stroke sets round their caps; set `stroke-linecap:square; stroke-linejoin:miter` on the `<g>` to match the square-corner rule.
 - An icon never carries meaning alone: pair it with text or an `sr-only` label.
 
 ## Hard rules
