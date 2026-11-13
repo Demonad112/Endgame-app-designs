@@ -81,3 +81,7 @@ Attributes only, no content edits (added to `site/character/index.html`; `?lab=0
 ## Locate / follow
 
 Changing any dropdown scrolls to the area that group affects (its `solo` selector in `GROUPS`) and flashes a gold outline + glow for ~2.6s (`[data-lab-flash]`). Each row has a `⌖` button to jump and highlight without changing anything. The **Follow** button turns auto-jump off/on (`localStorage["lab:follow"]`); `⌖` always works. Closed `<details>` ancestors are opened, hidden tab panels are selected, `prefers-reduced-motion` gets an instant scroll and no animation. On phones the sheet is capped at 50vh so the target stays visible above it.
+
+## Combination check
+
+A sweep of every preset and every single option at 360 and 1440px (overflow, JS errors, `?lab=audit` count against the original's 8) found two regressions, both fixed: `sev=filled` dark text was also applied to neutral and accent chips (now only good/warn/danger chips), and `dmg=tint` fire was 4.3:1 (now `#e0866e`). Vault (uses `sev=filled`) is back to 8. Option pairs are not swept yet.
