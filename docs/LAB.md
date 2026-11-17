@@ -45,6 +45,7 @@ Defined in `PRESETS`; one-line titles in `PRESET_META` (used as the `<option tit
 | `findings` | Findings list | `timeline`, `accordion`, `split`, `bands`, `rail`, `oneliners`, `columns`, `index`, `cards` |
 | `recs` | Recommendations | `stepcards`, `stepper`, `beforeafter`, `grid` (3-up bordered tiles, big number), `lanes` (full-width rows, left lane header), `sticky`, `receipt` |
 | `gear` | Gear layout | `ladder` (worst gap first, gap meter, band stripe), `slots` (paperdoll grid), `compact` (aligned one-row-per-slot), `bars` (one full-width gap bar per slot, worst first, band word + gap number), `tiers` (Far / Mid / Near groups, heading on the first card of each band) |
+| `gearfx` | Gear effects | `off` (turns off the five wow effects from `site/character/gear-wow.css`) |
 | `gdelta` | Skill gear changes | `delta` (tier-range pips), `tags` (slot tag, hover/focus/click lights the gear card), `compact` (one-liners), `grouped` (rows ordered by slot, one slot heading per slot, CSS only) |
 | `nav` | Section navigation | `tabs`, `rail`, `chips`, `jump`, `progress`, `none` |
 | `disclose` | Disclosure | `tabs`, `open`, `accordion`, `pro`, `hover` |
